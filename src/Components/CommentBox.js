@@ -3,6 +3,10 @@ import axios from 'axios';
 import "./CommentBox.css"
 // import { request } from 'express';
 
+var azure_public_ip = '52.246.250.124' // Static IP from Azure VM
+var database_port = 4500;
+var mongodb_azure_url = 'http://' + azure_public_ip + ':' + database_port; 
+
 const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ]
@@ -56,8 +60,9 @@ class CommentBox extends React.Component {
   getComments = () => {
     var song_id = this.props.id;
     console.log("Loading past comments...")
+    console.log(`${mongodb_azure_url}/song_comments/${song_id}`)
     // console.log(`http://localhost:4500/song_comments/${song_id}`)
-    axios.get(`http://localhost:4500/song_comments/${song_id}`)
+    axios.get(`${mongodb_azure_url}/song_comments/${song_id}`)
       .then( (response) => {
       if (response.data != "No comments exist!") {
         this.setState( {comments: response.data.comments} )
@@ -80,6 +85,7 @@ class CommentBox extends React.Component {
       // Get the current user. Pass as a prop
       // console.log(this.props.user)
       var user = this.props.user;
+      console.log("DISPLAY NAME: ", user)
       // Get the comment itself. 
       // console.log(event.target.comment.value);
       var comment = event.target.comment.value;
@@ -91,8 +97,9 @@ class CommentBox extends React.Component {
           song_id: this.props.id,
           user : user
       }
+      // console.log("P")
 
-      axios.post("http://localhost:4500/submit_comment", comment_info)
+      axios.post(`${mongodb_azure_url}` + '/submit_comment', comment_info)
         .then( res => console.log(res))
 
       /// console.log("submitted and showing comments")

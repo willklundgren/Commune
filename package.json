@@ -21,7 +21,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "dev_start.bat",
     "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:3223",

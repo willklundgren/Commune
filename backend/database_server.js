@@ -1,9 +1,13 @@
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var MongoClient = require('mongodb').MongoClient;
 
-var url = "mongodb://localhost:27017";
+var MongoClient = require("mongodb").MongoClient;
+
+// Taken from CosmosDB instance on Azure...
+var url = "mongodb://bp-db:WAowx88FJvtWo4YvTTW9LtLpcd2Vyf4ZzQJNP7sAMLIuwCW1UgjGe2P8w3D4bQfeMoPbwEzs7nOe2QqRiZWsHw%3D%3D@bp-db.documents.azure.com:10255/?ssl=true";
+var url_local = "mongodb://localhost:27017";
+var database_port = 4500;
 
 var app = express();
 app.use(bodyParser.urlencoded({extended:true}));
@@ -88,5 +92,6 @@ app.get("/song_comments/:song_id", function (req, res) {
 
 })
 
-app.listen(4500);
+console.log(`Database server starting on ${database_port}`)
+app.listen(database_port);
 

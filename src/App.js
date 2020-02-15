@@ -5,6 +5,8 @@ import PlaylistTable from './Components/PlaylistTable'
 import PlaylistHeader from './Components/PlaylistHeader'
 import PlaylistRow from './Components/PlaylistRow'
 import SpotifyLogin from './Components/SpotifyLogin';
+import PlaylistSelector from './Components/PlaylistSelector';
+
 
 import ReactDOM from "react-dom";
 import {
@@ -16,6 +18,19 @@ import {
   useLocation
 } from "react-router-dom";
 
+
+var azure_public_ip = '52.246.250.124',
+    spotify_port = 3223, // Static IP from Azure VM
+    spotify_login_url = 'http://' + azure_public_ip + ':' + spotify_port + '/login'
+
+// **DO NOT CHANGE BELOW LINE - USED BY SHELL SCRIPT**
+var dev = true
+// *********************************
+
+if (dev != false) {
+  spotify_login_url = 'http://localhost:' + spotify_port + '/login'
+}
+
 function App() {
 
   let location = useLocation();
@@ -23,11 +38,19 @@ function App() {
   
   return (
     <Fragment>
-      <SpotifyLogin/>
+      <SpotifyLogin spotify_login_url = {spotify_login_url}/>
       <NavBar/>
-      <PlaylistTable url = {location.pathname}/>
+      <PlaylistSelector url = {location.pathname}/>
+      {/* <PlaylistTable url = {location.pathname}/> */}
     </Fragment>
   );
 }
 
 export default App;
+
+
+
+
+
+
+

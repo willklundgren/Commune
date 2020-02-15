@@ -1,11 +1,5 @@
-/**
- * This is an example of a basic node.js script that performs
- * the Authorization Code oAuth2 flow to authenticate against
- * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
- */
+// Spotify OAuth2 Server
+// Starter code taken from https://github.com/spotify/web-api-auth-examples
 
 var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -13,11 +7,32 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
-var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // Your client id
-var client_secret = '4f39d523b69f47b3bee1e1662b545163'; // Your secret
-var redirect_uri = 'http://localhost:3223/callback'; // Your redirect uri
+// Spotify application credentials
+var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // My client ID
+var client_secret = '4f39d523b69f47b3bee1e1662b545163'; // My secret
 
+// Deployment
+var azure_public_ip = '52.246.250.124', // Static IP from Azure VM
+    frontend_port = 3000,
+    spotify_port = 3223,
+    redirect_uri = 'http://' + azure_public_ip + ':' + spotify_port + '/callback'; 
+    // Note: redirect_uri must be registered with Spotify
+
+// For testing purposes
 var playlist_id = "2Or6Yh2QJMHmh1ccAkqfc8";
+var dev = false; // Switch to "true" if in development
+
+if (dev != false) {
+  redirect_uri = 'http://localhost:' + spotify_port + '/callback'
+}
+
+var stateKey = 'spotify_auth_state';
+var app = express();
+
+app.use(express.static('build'));
+
+app.use(cors())
+   .use(cookieParser());
 
 /**
  * Generates a random string containing numbers and letters
@@ -34,32 +49,14 @@ var generateRandomString = function(length) {
   return text;
 };
 
-var stateKey = 'spotify_auth_state';
-
-var app = express();
-
-app.use(express.static(__dirname + '/public'))
-   .use(cors())
-   .use(cookieParser());
-
-//    app.get('/sampledata', (req, res) => {
-//     // Dummy data
-//     // const customers = {id: 1, name: 'Johnny'};
-//     const spotify_data = {
-//         song: 'DNA by Empire of the Sun',
-//         comment: 'Not a fan'
-//     }
-//     res.json(spotify_data);
-//     // console.log(customers)
-// });
-
 app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = 'user-read-private user-read-email';
+  // var scope = 'user-read-private user-read-email';
+  var scope = 'playlist-read-private playlist-read-collaborative'
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
@@ -121,7 +118,7 @@ app.get('/callback', function(req, res) {
         // });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect('http://' + azure_public_ip + ':' + spotify_port + '/#' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
@@ -160,5 +157,8 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 3223');
-app.listen(3223);
+console.log(`Listening on ${spotify_port}`);
+
+// console.log(process.env)
+
+app.listen(spotify_port);

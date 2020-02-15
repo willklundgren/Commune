@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+.vscode
+/Miscellaneous
+server_spotify_prod_test.js
