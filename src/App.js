@@ -38,15 +38,14 @@ function App() {
   
   return (
     <Fragment>
-      <SpotifyLogin spotify_login_url = {spotify_login_url}/>
-      <NavBar/>
+      <NavBar spotify_login_url = {spotify_login_url}/>
       <PlaylistSelector url = {location.pathname}/>
-      {/* <PlaylistTable url = {location.pathname}/> */}
     </Fragment>
   );
 }
 
 export default App;
+
 
 
 

@@ -6,6 +6,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
+
+    // WANT THE BELOW SCRIPT
+//     <Router>
+//     <Route path="/login" component = {NavBar}></Route>
+//   </Router>
 <HashRouter>
     <App />
 </HashRouter>,
