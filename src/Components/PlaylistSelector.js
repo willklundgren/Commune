@@ -5,6 +5,7 @@ import PlaylistRow from './PlaylistRow';
 import './PlaylistTable.css';
 import PlaylistTable from './PlaylistTable';
 import axios from 'axios';
+import { useLocation } from "react-router-dom"
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -28,14 +29,10 @@ class PlaylistSelector extends React.Component {
     var propsObject;
     this.state = {
       playlist: "NULL",
-      access_token: "",
-      refresh_token: "",
       playlists_available: "NULL",
       hasTokens: false,
-      spotify_id: false,
       value: 'No playlist selected.',
       playlistSelected: false,
-      user_display_name: "NULL",
       spotify_playlist_index: 0
     };
     var limit = 50;
@@ -47,78 +44,40 @@ class PlaylistSelector extends React.Component {
   componentDidMount() {
     console.log("in PlaylistSelector's componentDidMount...")
     
-
-    var tokens = getAccessToken(this.props.url)
    // console.log(tokens)
     
-    spotifyApi.setAccessToken(tokens[0]);
+    spotifyApi.setAccessToken(this.props.access_token);
     // .then( response => this.setState({profile: response}) )
-    console.log(this.state.spotify_id)
-
-    this.setState( 
-        {
-        access_token : tokens[0],
-        refresh_token : tokens[1],
-        hasTokens : tokens[2]
-        }
-    );
+    // console.log(this.state.user_id)
 
     // Get the user's available playlists and load them into state
-    this.getPlaylistData(tokens[0])
+    this.getPlaylistData(this.props.access_token)
   }
   
 
    getPlaylistData = (token) => {
       console.log("in getPlaylistData")
-      var id;
+      var id = this.props.user_id;
       var limit = 50;
-      spotifyApi.getMe()
-      .then( response => { 
+      var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
+
+      axios.get( url_string, {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      } )
+      .then(response => {
+        console.log(response)
         this.setState({
-        user_display_name: response.display_name,
-        spotify_id: response.id
-      })
-       id = response.id
-       //console.log(id)
+          playlists_available: response.data.items
+            .filter(item => item.collaborative == true)
+            .map(playlist => [playlist.name, playlist.id]),
+          spotify_playlist_index: response.data.offset + limit
+          },
+          () => console.log("Callback value is:", this.state.playlists_available))
+        console.log(response.data.offset + limit)
         }
       )
-      .then( () => {
-        var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
-
-        axios.get( url_string, {
-          headers: {
-            "Authorization": "Bearer " + token
-          }
-        } )
-        .then(response => {
-          console.log(response)
-          this.setState({
-            playlists_available: response.data.items
-              .filter(item => item.collaborative == true)
-              .map(playlist => [playlist.name, playlist.id]),
-            spotify_playlist_index: response.data.offset + limit
-            });
-          console.log(response.data.offset + limit)
-          }
-        )
-      } )
-      
-      
-
-
-
-
-      // spotifyApi.getUserPlaylists()
-      // // .then(response => console.log(response))
-      // .then( response => this.setState({playlists_available: response.items
-      //   .filter(item => item.collaborative == true)
-      //   .map(playlist => [playlist.name, playlist.id])
-      // }));
-
-      // console.log(token)
-
-      
-      console.log(this.state.playlists_available);
    }
 
    submitPlaylistSelection = (event, playlist_id) => {
@@ -153,12 +112,12 @@ class PlaylistSelector extends React.Component {
     console.log("current playlist index is ", this.state.spotify_playlist_index)
     console.log(this.state.access_token)
     var offset = this.state.spotify_playlist_index
-    var id = this.state.spotify_id
+    var id = this.props.user_id
     var limit = 50
     var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}&offset=${offset}`
     axios.get( url_string, {
           headers: {
-            "Authorization": "Bearer " + this.state.access_token
+            "Authorization": "Bearer " + this.props.access_token
           }
         } )
         .then(response => {
@@ -180,28 +139,30 @@ class PlaylistSelector extends React.Component {
       <Fragment>
 
       {this.state.playlistSelected == false && 
-      <form onSubmit={this.handlePlaylistSelection}>
-        <label>
-          Select a playlist...
-          <br></br>
-          <select onChange={this.handleChange}>
-            <option selected value = "No playlist selected.">(Select an option)</option>
-            {this.showPlaylistOptions(this.state.playlists_available)}
-          </select>
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-      }
 
-      <button onClick={this.getMorePlaylists}>Load more playlists</button>
+      <div>
+          <form onSubmit={this.handlePlaylistSelection}>
+            <label>
+              Select a playlist...
+              <br></br>
+              <select onChange={this.handleChange}>
+                <option selected value = "No playlist selected.">(Select an option)</option>
+                {this.showPlaylistOptions(this.state.playlists_available)}
+              </select>
+            </label>
+            <input type="submit" value="Submit" />
+        </form>
+        <button onClick={this.getMorePlaylists}>Load more playlists</button>
+      </div>
+      }
 
       {this.state.playlistSelected == true &&
        <PlaylistTable 
             playlist_id = {this.state.value.slice( this.state.value.lastIndexOf(",") + 1) }
             playlist_name = {this.state.value.slice( 0, this.state.value.lastIndexOf(",")) }
-            access_token = {this.state.access_token}
-            refresh_token = {this.state.refresh_token}
-            display_name = {this.state.user_display_name}
+            access_token = {this.props.access_token}
+            refresh_token = {this.props.refresh_token}
+            display_name = {this.props.user_display_name}
       />}
       
       </Fragment>

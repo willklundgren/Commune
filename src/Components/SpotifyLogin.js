@@ -1,32 +1,54 @@
 import React from 'react';
 import { useLocation } from "react-router-dom";
 import './SpotifyLogin.css';
+import axios from 'axios';
 
-function getAccessToken() {
-    console.log(HashChangeEvent.newURL)
-}
 
-function usePageViews() {
-    let location = useLocation();
-    console.log(location);
-    return location.pathname;
-}
+
 
 class SpotifyLogin extends React.Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
       };
+      this.loginToSpotify = this.loginToSpotify.bind(this);
+      this.isAuthenticated = this.isAuthenticated.bind(this);
+    }
+
+    loginToSpotify = () => {
+      console.log(this.props.spotify_login_url)
+      axios.get(this.props.spotify_login_url, {
+        headers: {
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+          // "Upgrade-Insecure-Requests": 1
+        }
+      }   
+        )
+    }
+
+    isAuthenticated = () => {
+      if (!this.props.authenticated) {
+        return (
+        <div className = "LoginButton">
+          <a href = {this.props.spotify_login_url}>Login to Spotify</a>
+          {/* <button onClick={this.loginToSpotify}>Login</button> */}
+        </div>
+        )
+      }
+      else {
+        return (
+          <span>
+            Signed in as {this.props.user_display_name}
+          </span>
+        )
+
+      }
     }
   
     render() {
       console.log(this.props.spotify_login_url)
       return (
-        <div className = "LoginButton">
-            <a href = {this.props.spotify_login_url}>
-                Login to Spotify
-            </a>
-        </div>
+          this.isAuthenticated()
       );
     }
   };

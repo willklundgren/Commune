@@ -6,6 +6,7 @@ import PlaylistHeader from './Components/PlaylistHeader'
 import PlaylistRow from './Components/PlaylistRow'
 import SpotifyLogin from './Components/SpotifyLogin';
 import PlaylistSelector from './Components/PlaylistSelector';
+import SpotifyWebApi from 'spotify-web-api-js';
 
 
 import ReactDOM from "react-dom";
@@ -17,6 +18,7 @@ import {
   useParams,
   useLocation
 } from "react-router-dom";
+import SessionContainer from './Components/SessionContainer';
 
 
 var azure_public_ip = '52.246.250.124',
@@ -32,19 +34,27 @@ if (dev != false) {
 }
 
 function App() {
-
-  let location = useLocation();
-  let pathname = location.pathname;
-  
   return (
-    <Fragment>
-      <NavBar spotify_login_url = {spotify_login_url}/>
-      <PlaylistSelector url = {location.pathname}/>
-    </Fragment>
+    <Router>
+      <Switch>
+
+        <Route 
+          path="/authenticated" 
+          render={ routeProps => <SessionContainer sessionInfo={routeProps} /> }
+        />
+
+        <Route
+          exact path="/login">
+          <NavBar spotify_login_url={spotify_login_url} authenticated={false}/>
+        </Route>
+
+      </Switch>
+    </Router>
   );
 }
 
 export default App;
+
 
 
 

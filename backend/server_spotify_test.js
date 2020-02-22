@@ -6,6 +6,8 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const axios = require('axios').default;
+
 
 // Spotify application credentials
 var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // My client ID
@@ -51,6 +53,7 @@ app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
+  console.log("hi!!!!!!!!!!!!!")
 
   // your application requests authorization
   // var scope = 'user-read-private user-read-email';
@@ -65,10 +68,13 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('/callback', function(req, res) {
+var access_token, refresh_token
+app.get('/callback', function(req, res, next) {
+  console.log("in callback")
 
   // your application requests refresh and access tokens
   // after checking the state parameter
+
 
   var code = req.query.code || null;
   var state = req.query.state || null;
@@ -97,10 +103,12 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+        access_token = body.access_token,
+        refresh_token = body.refresh_token;
 
         console.log("Access token from backend:", access_token);
+
+        
 
         // var options = {
         //   url: 'https://api.spotify.com/v1/me',
@@ -115,21 +123,47 @@ app.get('/callback', function(req, res) {
         //     // console.log(body);
         // });
 
+       // res.send("access token ready")
+
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://' + 'localhost' + ':' + 3000 + '/#' +
+        res.redirect('http://' + 'localhost' + ':' + 3000 + '/authenticated/' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
           }));
+
+        
+
       } else {
         res.redirect('/#' +
           querystring.stringify({
             error: 'invalid_token'
           }));
       }
-    });
+    }, 
+    );
   }
-});
+  // next()
+}
+//   function(req, res) {
+//     axios.get(
+//       'https://api.spotify.com/v1/me', {
+//       headers: { 'Authorization': 'Bearer ' + access_token } }
+//     ).then(profile_object => {
+//       res.location("localhost:3000/authenticated")
+//       console.log("PROFILE STUFF IS.......", profile_object)
+//       res.json({
+//         access_token: access_token,
+//         refresh_token: refresh_token,
+//         user_id: profile_object.data.id,
+//         user_display_name: profile_object.data.display_name
+//       })
+
+//     }
+//   )
+
+// }
+);
 
 app.get('/refresh_token', function(req, res) {
 

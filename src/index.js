@@ -1,19 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from "react-router-dom";
+import { HashRouter, Router, } from "react-router-dom";
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-
-    // WANT THE BELOW SCRIPT
-//     <Router>
-//     <Route path="/login" component = {NavBar}></Route>
-//   </Router>
-<HashRouter>
-    <App />
-</HashRouter>,
+ReactDOM.render(<App/>,
 document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
