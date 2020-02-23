@@ -12,7 +12,6 @@ function NavBar(props) {
   return (
     <div className="NavBar">
         <div className="Title">Betterplay</div>
-        {/* <div className="LoginSpotify">Spotify Login Here</div> */}
         <SpotifyLogin user_display_name={props.user_display_name} spotify_login_url = {props.spotify_login_url} authenticated = {props.authenticated}/>
     </div>
   );

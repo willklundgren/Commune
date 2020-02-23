@@ -26,11 +26,11 @@ class PlaylistTable extends React.Component {
 
     return (
       <Fragment>
-
-        {this.state.playlist != 'NULL' &&
-          <span>
-          Playlist: {this.props.playlist_name} 
-          </span>
+        <div>
+           {this.state.playlist != 'NULL' &&
+          <div className="PlaylistName">
+          {this.props.playlist_name} 
+          </div>
         }
       
         <table className='PlaylistTable'>
@@ -41,6 +41,10 @@ class PlaylistTable extends React.Component {
                   )}
 
         </table>
+
+        </div>
+
+       
       </Fragment>
     );
   }

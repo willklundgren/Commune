@@ -29,7 +29,7 @@ class SpotifyLogin extends React.Component {
     isAuthenticated = () => {
       if (!this.props.authenticated) {
         return (
-        <div className = "LoginButton">
+        <div className = "LoginButtonSignedOut">
           <a href = {this.props.spotify_login_url}>Login to Spotify</a>
           {/* <button onClick={this.loginToSpotify}>Login</button> */}
         </div>
@@ -37,7 +37,7 @@ class SpotifyLogin extends React.Component {
       }
       else {
         return (
-          <span>
+          <span className = "LoginButtonSignedIn">
             Signed in as {this.props.user_display_name}
           </span>
         )

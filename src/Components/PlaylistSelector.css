@@ -1,0 +1,21 @@
+.PlaylistSelector {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px;
+    align-items: center
+    /* background-color:goldenrod; */
+}
+
+.SelectionElements {
+    text-align: center;
+    margin: 3px
+    /* background-color:goldenrod */
+}
+
+.SelectionElements span {
+    text-align: center;
+    font-size: large;
+    /* font-weight: bold; */
+    /* background-color:goldenrod */
+}

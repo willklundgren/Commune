@@ -6,6 +6,7 @@ import './PlaylistTable.css';
 import PlaylistTable from './PlaylistTable';
 import axios from 'axios';
 import { useLocation } from "react-router-dom"
+import './PlaylistSelector.css';
 
 const spotifyApi = new SpotifyWebApi();
 
@@ -37,10 +38,8 @@ class PlaylistSelector extends React.Component {
     };
     var limit = 50;
     this.getMorePlaylists = this.getMorePlaylists.bind(this);
-
   }
   
-
   componentDidMount() {
     console.log("in PlaylistSelector's componentDidMount...")
     
@@ -136,36 +135,35 @@ class PlaylistSelector extends React.Component {
   render() {
 
     return (
-      <Fragment>
+      <div className="PlaylistSelector">
 
-      {this.state.playlistSelected == false && 
+        {this.state.playlistSelected == false && 
+        <div className="SelectionElements">
+            <form onSubmit={this.handlePlaylistSelection}>
+              <label>
+                <span>Select a playlist...</span>
+                <br></br>
+                <select className="SelectionElements" onChange={this.handleChange}>
+                  <option selected value = "No playlist selected.">(Select an option)</option>
+                  {this.showPlaylistOptions(this.state.playlists_available)}
+                </select>
+              </label>
+              <input type="submit" value="Submit" />
+          </form>
+          <button onClick={this.getMorePlaylists}>Load more playlists</button>
+        </div>
+        }
 
-      <div>
-          <form onSubmit={this.handlePlaylistSelection}>
-            <label>
-              Select a playlist...
-              <br></br>
-              <select onChange={this.handleChange}>
-                <option selected value = "No playlist selected.">(Select an option)</option>
-                {this.showPlaylistOptions(this.state.playlists_available)}
-              </select>
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
-        <button onClick={this.getMorePlaylists}>Load more playlists</button>
-      </div>
-      }
-
-      {this.state.playlistSelected == true &&
-       <PlaylistTable 
-            playlist_id = {this.state.value.slice( this.state.value.lastIndexOf(",") + 1) }
-            playlist_name = {this.state.value.slice( 0, this.state.value.lastIndexOf(",")) }
-            access_token = {this.props.access_token}
-            refresh_token = {this.props.refresh_token}
-            display_name = {this.props.user_display_name}
-      />}
+        {this.state.playlistSelected == true &&
+        <PlaylistTable 
+              playlist_id = {this.state.value.slice( this.state.value.lastIndexOf(",") + 1) }
+              playlist_name = {this.state.value.slice( 0, this.state.value.lastIndexOf(",")) }
+              access_token = {this.props.access_token}
+              refresh_token = {this.props.refresh_token}
+              display_name = {this.props.user_display_name}
+        />}
       
-      </Fragment>
+      </div>
     );
   }
 };
