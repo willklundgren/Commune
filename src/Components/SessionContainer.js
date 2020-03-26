@@ -11,7 +11,10 @@ function getAccessToken ( url ) {
     }
     else {
       url = url.split("=");
-      var access_token = url[1].slice(0,162);
+      console.log(url[1].split("&")[0])
+
+      // var access_token = url[1].slice(0,162); old method
+      var access_token = url[1].split("&")[0];
       var refresh_token = url[2];
       return [access_token, refresh_token, true];
     }
@@ -30,10 +33,13 @@ class SessionContainer extends React.Component {
     }
 
     componentDidMount() {
+      console.log("session info is:", this.props.sessionInfo)
         var access_token, refresh_token, gotTokens, url_string;
 
         // Extract the access and refresh tokens from the pathname in sessionInfo prop
         [access_token, refresh_token, gotTokens] = getAccessToken(this.props.sessionInfo.location.pathname)
+        console.log("access token is:", access_token)
+
 
         // Make a request to get user info using axios
         url_string = "https://api.spotify.com/v1/me"
@@ -49,12 +55,9 @@ class SessionContainer extends React.Component {
                   refresh_token: refresh_token,
                   user_id: profile.data.id,
                   user_display_name: profile.data.display_name
-          }
-              )
+              }
+            )
           )
-
-        // Change the state.
-
     }
   
     render() {

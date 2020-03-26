@@ -1,8 +1,11 @@
 .PlaylistTable {
+    /* font-family: 'Exo 2' */
     
 }
 
 .PlaylistName {
+    /* font-family: 'Exo 2'; */
     text-align: center;
     font-size: large;
+    padding: 4px;
 }

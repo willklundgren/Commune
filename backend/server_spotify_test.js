@@ -53,7 +53,7 @@ app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
-  console.log("hi!!!!!!!!!!!!!")
+  console.log("Logging in...")
 
   // your application requests authorization
   // var scope = 'user-read-private user-read-email';
@@ -108,8 +108,6 @@ app.get('/callback', function(req, res, next) {
 
         console.log("Access token from backend:", access_token);
 
-        
-
         // var options = {
         //   url: 'https://api.spotify.com/v1/me',
         // //   url: "https://api.spotify.com/v1/playlists/2Or6Yh2QJMHmh1ccAkqfc8/tracks?limit=5",
@@ -126,7 +124,7 @@ app.get('/callback', function(req, res, next) {
        // res.send("access token ready")
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://' + 'localhost' + ':' + 3000 + '/authenticated/' +
+        res.redirect('http://' + 'localhost:' + '3000' + '/authenticated/' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
@@ -143,26 +141,57 @@ app.get('/callback', function(req, res, next) {
     }, 
     );
   }
-  // next()
+  
 }
-//   function(req, res) {
-//     axios.get(
-//       'https://api.spotify.com/v1/me', {
-//       headers: { 'Authorization': 'Bearer ' + access_token } }
-//     ).then(profile_object => {
-//       res.location("localhost:3000/authenticated")
-//       console.log("PROFILE STUFF IS.......", profile_object)
-//       res.json({
-//         access_token: access_token,
-//         refresh_token: refresh_token,
-//         user_id: profile_object.data.id,
-//         user_display_name: profile_object.data.display_name
-//       })
 
-//     }
-//   )
+);
 
-// }
+app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( req, res ) {
+
+  console.log("Getting all playlist tracks...")
+  console.log(req.params)
+
+  var playlist_id = req.params.playlist_id
+  var token = req.params.access_token
+  var accumulated_playlist = []
+  var more_tracks = true
+  var playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
+
+  // var output = await getPlaylists(playlist_tracks_url)
+  while (more_tracks != null) {
+    console.log("inside loop")
+    await axios.get( playlist_tracks_url, {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    } ).then( tracks => {
+        console.log(tracks)
+        if (tracks.data.next == null) {
+          console.log("about to send back data...")
+          if (accumulated_playlist == []) {
+            accumulated_playlist = tracks.data.items
+          }
+          else {
+            accumulated_playlist = accumulated_playlist.concat(tracks.data.items)
+          }
+          res.send(accumulated_playlist)
+          more_tracks = null
+        }
+        else { // there's still more tracks to retrieve...
+          if (accumulated_playlist.length == 0) {
+            accumulated_playlist = tracks.data.items
+          }
+          else {
+            accumulated_playlist.push(tracks.data.items)
+          }
+          playlist_tracks_url = tracks.data.next
+        }  
+      }
+    )
+  }
+
+}
+  
 );
 
 app.get('/refresh_token', function(req, res) {

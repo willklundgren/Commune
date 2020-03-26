@@ -6,6 +6,8 @@ var request = require('request'); // "Request" library
 var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
+const axios = require('axios').default;
+
 
 // Spotify application credentials
 var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // My client ID
@@ -53,6 +55,7 @@ app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
+  console.log("Logging in...")
 
   // your application requests authorization
   // var scope = 'user-read-private user-read-email';
@@ -67,10 +70,13 @@ app.get('/login', function(req, res) {
     }));
 });
 
-app.get('/callback', function(req, res) {
+var access_token, refresh_token
+app.get('/callback', function(req, res, next) {
+  console.log("in callback")
 
   // your application requests refresh and access tokens
   // after checking the state parameter
+
 
   var code = req.query.code || null;
   var state = req.query.state || null;
@@ -99,8 +105,8 @@ app.get('/callback', function(req, res) {
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
 
-        var access_token = body.access_token,
-            refresh_token = body.refresh_token;
+        access_token = body.access_token,
+        refresh_token = body.refresh_token;
 
         console.log("Access token from backend:", access_token);
 
@@ -117,21 +123,78 @@ app.get('/callback', function(req, res) {
         //     // console.log(body);
         // });
 
+       // res.send("access token ready")
+
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://' + azure_public_ip + ':' + spotify_port + '/#' +
+        res.redirect('http://' + 'localhost:' + '3000' + '/authenticated/' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
           }));
+
+        
+
       } else {
         res.redirect('/#' +
           querystring.stringify({
             error: 'invalid_token'
           }));
       }
-    });
+    }, 
+    );
   }
-});
+  
+}
+
+);
+
+app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( req, res ) {
+
+  console.log("Getting all playlist tracks...")
+  console.log(req.params)
+
+  var playlist_id = req.params.playlist_id
+  var token = req.params.access_token
+  var accumulated_playlist = []
+  var more_tracks = true
+  var playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
+
+  // var output = await getPlaylists(playlist_tracks_url)
+  while (more_tracks != null) {
+    console.log("inside loop")
+    await axios.get( playlist_tracks_url, {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    } ).then( tracks => {
+        console.log(tracks)
+        if (tracks.data.next == null) {
+          console.log("about to send back data...")
+          if (accumulated_playlist == []) {
+            accumulated_playlist = tracks.data.items
+          }
+          else {
+            accumulated_playlist = accumulated_playlist.concat(tracks.data.items)
+          }
+          res.send(accumulated_playlist)
+          more_tracks = null
+        }
+        else { // there's still more tracks to retrieve...
+          if (accumulated_playlist.length == 0) {
+            accumulated_playlist = tracks.data.items
+          }
+          else {
+            accumulated_playlist.push(tracks.data.items)
+          }
+          playlist_tracks_url = tracks.data.next
+        }  
+      }
+    )
+  }
+
+}
+  
+);
 
 app.get('/refresh_token', function(req, res) {
 
@@ -157,8 +220,14 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log(`Listening on ${spotify_port}`);
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'build/index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
-// console.log(process.env)
+console.log(`Listening on ${spotify_port}`);
 
 app.listen(spotify_port);

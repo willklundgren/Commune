@@ -5,7 +5,7 @@ import PlaylistRow from './PlaylistRow';
 import './PlaylistTable.css';
 import PlaylistTable from './PlaylistTable';
 import axios from 'axios';
-import { useLocation } from "react-router-dom"
+import { useLocation, Redirect } from "react-router-dom"
 import './PlaylistSelector.css';
 
 const spotifyApi = new SpotifyWebApi();
@@ -155,13 +155,17 @@ class PlaylistSelector extends React.Component {
         }
 
         {this.state.playlistSelected == true &&
+
+        // <Redirect to="/test"></Redirect>
+
         <PlaylistTable 
               playlist_id = {this.state.value.slice( this.state.value.lastIndexOf(",") + 1) }
               playlist_name = {this.state.value.slice( 0, this.state.value.lastIndexOf(",")) }
               access_token = {this.props.access_token}
               refresh_token = {this.props.refresh_token}
               display_name = {this.props.user_display_name}
-        />}
+        />
+        }
       
       </div>
     );

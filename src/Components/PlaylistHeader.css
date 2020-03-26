@@ -3,3 +3,17 @@
     padding: 5px;
     border: 1px solid black;
   }
+
+  .PlaylistHeaderSong {
+    text-align: left;
+    padding: 5px;
+    border: 1px solid black;
+    width: 30%
+  }
+
+  .PlaylistHeaderComments {
+    text-align: left;
+    padding: 5px;
+    border: 1px solid black;
+    width: 70%
+  }

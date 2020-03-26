@@ -2,11 +2,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 5px
+    padding: 5px;
+    /* font-family: 'Exo 2'; */
+    font-weight: 400
     /* background-color:goldenrod; */
 }
 
 .Title {
     font-size: xx-large;
-    font-weight: 550;
+    font-weight: 600; 
+    font-family: 'Exo 2'
 }

@@ -15,6 +15,8 @@ const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June",
   "July", "August", "Sep", "Oct", "Nov", "Dec"
 ]
 
+const comment_default_limit = 3
+
 function formattedDate(date) {
   var d = new Date(date),
       month = '' + (monthNamesShort[d.getMonth()]),
@@ -51,8 +53,13 @@ class CommentBox extends React.Component {
     super(props);
     // "comments" needs to be an array of comment objects, mirroring the database.
     this.state = {
-        comments: []
+        comments: [],
+        show_all: false
     };
+  }
+
+  componentDidMount () {
+    this.getComments()
   }
 
   // Load the song's comments from the database.
@@ -65,13 +72,18 @@ class CommentBox extends React.Component {
     axios.get(`${mongodb_azure_url}/song_comments/${song_id}`)
       .then( (response) => {
       if (response.data != "No comments exist!") {
-        this.setState( {comments: response.data.comments} )
+        this.setState( { comments: response.data.comments.reverse().map(
+          comment => this.makeComment(comment) ) } ) // reverse to order from newest->oldest
       }
       console.log(response.data)
     })
       // .then( response => console.log(response) )
     // console.log(this.state.comments);
   }
+
+  showAllComments = () => (
+    this.setState({show_all:true})
+  )
   
 
 
@@ -119,11 +131,15 @@ class CommentBox extends React.Component {
       // console.log("in showComments function")
       // console.log(typeof(this.state.comments) != 'undefined')
       if (this.state.comments != [] && typeof(this.state.comments) != 'undefined') {
-        var all_comments = this.state.comments.map(
-          comment => this.makeComment(comment)
-          ).reverse()
+        // var shown_comments = this.state.comments.slice(0,3)
+        if (this.state.show_all == true) {
+          return this.state.comments
+        }
+        else {
+          return this.state.comments.slice(0,3)
+        }
         
-        return all_comments;
+  
       }
     }
 
@@ -134,8 +150,6 @@ class CommentBox extends React.Component {
         // this.setState( {comments: comments} )
       }
     }
-
-    // const jsxtest = ( <div>whoa!</div> )
 
   render() {
     return (
@@ -148,7 +162,7 @@ class CommentBox extends React.Component {
 
         {this.showComments()}
 
-        <button onClick = {this.getComments}>See more comments</button>
+        <button onClick = {this.showAllComments}>See more comments</button>
         
       </div>
 

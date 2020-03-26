@@ -3,7 +3,8 @@
     flex-direction: row;
     justify-content: center;
     padding: 5px;
-    align-items: center
+    align-items: center;
+    /* font-family: 'Exo 2' */
     /* background-color:goldenrod; */
 }
 

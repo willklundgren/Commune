@@ -12,8 +12,10 @@ class PlaylistHeader extends React.Component {
     return (
       <Fragment>
           <tr className="table-active">
-            {this.state.selected.map(field =>
-              <th className = 'PlaylistHeader'>{field}</th>)}
+            {/* {this.state.selected.map(field =>
+              <th className = 'PlaylistHeader'>{field}</th>)} */}
+              <th className = 'PlaylistHeaderSong'>Song</th>
+              <th className = 'PlaylistHeaderComments'>Comments</th>
           </tr>
       </Fragment>
     );
