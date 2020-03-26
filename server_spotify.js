@@ -7,6 +7,7 @@ var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const axios = require('axios').default;
+const path = require('path');
 
 
 // Spotify application credentials
@@ -126,7 +127,7 @@ app.get('/callback', function(req, res, next) {
        // res.send("access token ready")
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://' + 'localhost:' + '3000' + '/authenticated/' +
+        res.redirect('http://' + azure_public_ip + ':' + spotify_port + '/authenticated/' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
