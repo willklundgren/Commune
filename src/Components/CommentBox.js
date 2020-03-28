@@ -24,9 +24,7 @@ function formattedDate(date) {
       day = '' + d.getDate(),
       year = d.getFullYear(),
       hour = d.getHours(),
-      minute = d.getMinutes();
-
-  console.log(minute)
+      minute = d.getMinutes()
 
   var am_or_pm;
       
@@ -68,8 +66,8 @@ class CommentBox extends React.Component {
   // Put them in the CommentBox's state.
   getComments = () => {
     var song_id = this.props.id;
-    console.log("Loading past comments...")
-    console.log(`${mongodb_azure_url}/song_comments/${song_id}`)
+    // console.log("Loading past comments...")
+    // console.log(`${mongodb_azure_url}/song_comments/${song_id}`)
     // console.log(`http://localhost:4500/song_comments/${song_id}`)
     axios.get(`${mongodb_azure_url}/song_comments/${song_id}`)
       .then( (response) => {
@@ -77,7 +75,7 @@ class CommentBox extends React.Component {
         this.setState( { comments: response.data.comments.reverse().map(
           comment => this.makeComment(comment) ) } ) // reverse to order from newest->oldest
       }
-      console.log(response.data)
+      // console.log(response.data)
     })
       // .then( response => console.log(response) )
     // console.log(this.state.comments);
@@ -148,7 +146,7 @@ class CommentBox extends React.Component {
     componentDidUpdate(prevProps, prevState) {
       // compare prev comments to new comments
       if (prevState.comments != this.state.comments) {
-        console.log("State change")
+        // console.log("State change")
         // this.setState( {comments: comments} )
       }
     }

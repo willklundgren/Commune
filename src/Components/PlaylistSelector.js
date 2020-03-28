@@ -74,7 +74,7 @@ class PlaylistSelector extends React.Component {
           spotify_playlist_index: response.data.offset + limit
           },
           () => console.log("Callback value is:", this.state.playlists_available))
-        console.log(response.data.offset + limit)
+        // console.log(response.data.offset + limit)
         }
       )
    }
