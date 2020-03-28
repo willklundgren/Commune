@@ -29,7 +29,7 @@ var azure_public_ip = '52.246.250.124',
     spotify_login_url = 'http://' + azure_public_ip + ':' + spotify_port + '/login'
 
 // **DO NOT CHANGE BELOW LINE - USED BY SHELL SCRIPT**
-var dev = false
+var dev = true
 // *********************************
 
 if (dev != false) {
@@ -82,6 +82,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

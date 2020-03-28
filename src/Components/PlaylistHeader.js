@@ -15,6 +15,8 @@ class PlaylistHeader extends React.Component {
             {/* {this.state.selected.map(field =>
               <th className = 'PlaylistHeader'>{field}</th>)} */}
               <th className = 'PlaylistHeaderSong'>Song</th>
+              <th className = 'PlaylistHeaderSong'>Artist</th>
+              <th className = 'PlaylistHeaderSong'>Date Added</th>
               <th className = 'PlaylistHeaderComments'>Comments</th>
           </tr>
       </Fragment>

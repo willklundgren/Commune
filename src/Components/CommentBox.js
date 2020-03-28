@@ -18,12 +18,15 @@ const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June",
 const comment_default_limit = 3
 
 function formattedDate(date) {
+
   var d = new Date(date),
       month = '' + (monthNamesShort[d.getMonth()]),
       day = '' + d.getDate(),
       year = d.getFullYear(),
       hour = d.getHours(),
       minute = d.getMinutes();
+
+  console.log(minute)
 
   var am_or_pm;
       
@@ -37,9 +40,8 @@ function formattedDate(date) {
   }
 
   // console.log(minute.toString.length)
-  if (minute.length == 1) {
-    // console.log(minute)
-    minute = "0" + minute.toString() 
+  if (minute.toString().length == 1) {
+    minute = "0" + minute
   }
 
   var dateString = month+" "+day+", "+year+" at "+hour+":"+minute+am_or_pm
