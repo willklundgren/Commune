@@ -107,12 +107,22 @@ class CommentBox extends React.Component {
           date_and_time: date_and_time,
           song: this.props.song,
           song_id: this.props.id,
+          playlist_id: this.props.playlist_id,
           user : user
       }
-      // console.log("P")
 
-      axios.post(`${mongodb_azure_url}` + '/submit_comment', comment_info)
-        .then( res => console.log(res))
+      // axios.post(`${mongodb_azure_url}` + '/submit_comment', comment_info)
+      //   .then( res => console.log(res))
+
+      // NEW CODE FOR RE-CONFIGURED DATABASE BELOW
+      var local_db_url = 'http://localhost:' + database_port
+      axios.post( `${local_db_url}/post_comment`, comment_info )
+      .then(  response => console.log(response)  )
+
+
+
+
+      // END OF NEW-DATABASE-RELATED CODE
 
       /// console.log("submitted and showing comments")
       // this.getComments()

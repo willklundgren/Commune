@@ -39,7 +39,9 @@ class PlaylistRow extends React.Component {
                 <td className='PlaylistRow'>
                     <CommentBox id = {this.props.rowSong.track.id}
                      user = {this.props.user} 
-                     song = {this.props.rowSong.track.name} />
+                     song = {this.props.rowSong.track.name}
+                     playlist_id = {this.props.playlist_id}
+                    />
                 </td>
             </tr>
         </Fragment>

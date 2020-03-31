@@ -13,6 +13,7 @@ class PlaylistTable extends React.Component {
     super(props);
     this.state = {
       playlist: "NULL",
+      playlist_comments: "NULL",
       profile: false
     };
   }
@@ -35,7 +36,19 @@ class PlaylistTable extends React.Component {
           console.log(response)
           this.setState({playlist: response})
         }
-      ) 
+    )
+
+    // Get the playlist's comments here.
+    // Remember that each playlist corresponds to a document in the MongoDB database.
+    var playlist_comments_url_local = `http://localhost:4500/playlist_comments/${playlist_id}`
+    axios.get( playlist_comments_url_local  )
+    .then(
+      response => {
+        console.log(response)
+        this.setState({playlist_comments : response})
+      }
+
+    )
   }
 
   redirect() {
@@ -67,8 +80,13 @@ class PlaylistTable extends React.Component {
                   .sort(
                     (song1, song2) => !( song2.added_at - song1.added_at )
                   )
+                  // Below, want to pass 
                   .map(
-                    song => <PlaylistRow user = {this.props.display_name} rowSong = {song} />
+                    song => <PlaylistRow 
+                    user = {this.props.display_name} 
+                    rowSong = {song} 
+                    playlist_id = {this.props.playlist_id}
+                    />
                     )}
 
                 </table>

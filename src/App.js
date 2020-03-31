@@ -6,6 +6,8 @@ import PlaylistHeader from './Components/PlaylistHeader'
 import PlaylistRow from './Components/PlaylistRow'
 import SpotifyLogin from './Components/SpotifyLogin';
 import PlaylistSelector from './Components/PlaylistSelector';
+import DatabaseTest from './Components/DatabaseTest';
+
 import SpotifyWebApi from 'spotify-web-api-js';
 
 import ReactDOM from "react-dom";
@@ -70,18 +72,17 @@ function App() {
           <Route
             path="/">
             <NavBar spotify_login_url={spotify_login_url} authenticated={false}/>
+            <DatabaseTest />
           </Route>
 
         </Switch>
      
-
-
     </Router>
-
   );
 }
 
 export default App;
+
 
 
 
