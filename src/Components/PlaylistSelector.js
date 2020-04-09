@@ -41,7 +41,7 @@ class PlaylistSelector extends React.Component {
   }
   
   componentDidMount() {
-    console.log("in PlaylistSelector's componentDidMount...")
+    // console.log("in PlaylistSelector's componentDidMount...")
     
    // console.log(tokens)
     
@@ -73,7 +73,7 @@ class PlaylistSelector extends React.Component {
             .map(playlist => [playlist.name, playlist.id]),
           spotify_playlist_index: response.data.offset + limit
           },
-          () => console.log("Callback value is:", this.state.playlists_available))
+          () => console.log("PlaylistSelector's playlist_available value is:", this.state.playlists_available))
         // console.log(response.data.offset + limit)
         }
       )

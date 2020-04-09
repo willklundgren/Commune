@@ -14,10 +14,10 @@ class DatabaseTest extends React.Component {
     callNewDatabase = () => {
         var beet_chamber_id = '5CtBwfw7lpoOpDavXjchp0'
         var comment_info = {
-          comment: "another one",
+          comment: "comment 1",
           date_and_time: "date_and_time",
-          song: "song",
-          song_id: "spotify song id 3",
+          song: "song title 3",
+          song_id: "spotify song id 1",
           playlist_id: beet_chamber_id,
           user : "user"
         }

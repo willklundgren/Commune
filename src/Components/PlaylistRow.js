@@ -9,12 +9,11 @@ const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June",
 
 class PlaylistRow extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
           playlist: "NULL",
           profile: false
-        };
-        console.log(this.props.rowSong)
+        }
       }
       
     formatDate = (javascriptDateObject) => {
@@ -33,14 +32,17 @@ class PlaylistRow extends React.Component {
         return (
         <Fragment>
             <tr>
-                <td className='PlaylistRow'>{this.props.rowSong.track.name}</td>
-                <td className='PlaylistRow'>{this.props.rowSong.track.artists[0].name}</td>
-                <td className='PlaylistRow'>{this.formatDate(new Date(this.props.rowSong.added_at))}</td>
+                <td className='PlaylistRow'>{this.props.song_title}</td>
+                <td className='PlaylistRow'>{this.props.artist}</td>
+                <td className='PlaylistRow'>{this.formatDate(new Date(this.props.date_added))}</td>
                 <td className='PlaylistRow'>
-                    <CommentBox id = {this.props.rowSong.track.id}
-                     user = {this.props.user} 
-                     song = {this.props.rowSong.track.name}
+                    <CommentBox
+                     id = {this.props.song_id}
+                     user = {this.props.user}
+                     song = {this.props.song_title}
                      playlist_id = {this.props.playlist_id}
+                     song_comments = { typeof(this.props.song_comments) === 'undefined' ? undefined : this.props.song_comments.song_comments}
+                     artist = {this.props.artist}
                     />
                 </td>
             </tr>

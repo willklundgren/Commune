@@ -46,7 +46,7 @@ class SpotifyLogin extends React.Component {
     }
   
     render() {
-      console.log(this.props.spotify_login_url)
+      console.log("spotify login URL:", this.props.spotify_login_url)
       return (
           this.isAuthenticated()
       );

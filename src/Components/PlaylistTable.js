@@ -6,8 +6,6 @@ import './PlaylistTable.css';
 import { Link, Redirect, NavLink } from 'react-router-dom';
 import axios from 'axios';
 
-const spotifyApi = new SpotifyWebApi();
-
 class PlaylistTable extends React.Component {
   constructor(props) {
     super(props);
@@ -21,33 +19,28 @@ class PlaylistTable extends React.Component {
   componentDidMount() {
 
     var playlist_id = this.props.playlist_id
+    var playlist_name = encodeURIComponent(this.props.playlist_name)
     var access_token = this.props.access_token
     var url_string = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
     var accumulated_playlist = []
     var more_tracks = true
+    var playlist_comments_url_local = `http://localhost:4500/playlist_comments/${playlist_id}/${playlist_name}`
 
     var playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
     var stuff = `https://api.spotify.com/v1/me`
+    var playlist_songs
    
-
-    axios.get( `http://52.246.250.124:3223/get_all_playlist_tracks/${playlist_id}/${access_token}`)
-    .then(
-        response => {
-          console.log(response)
-          this.setState({playlist: response})
-        }
-    )
-
-    // Get the playlist's comments here.
-    // Remember that each playlist corresponds to a document in the MongoDB database.
-    var playlist_comments_url_local = `http://localhost:4500/playlist_comments/${playlist_id}`
-    axios.get( playlist_comments_url_local  )
-    .then(
-      response => {
-        console.log(response)
-        this.setState({playlist_comments : response})
-      }
-
+    // Call to the Spotify server...
+    var SpotifyRequestPromise = axios.get( `http://52.246.250.124:3223/get_all_playlist_tracks/${playlist_id}/${access_token}`)
+    var DatabaseRequestPromise = axios.get( playlist_comments_url_local  )
+    axios.all([SpotifyRequestPromise, DatabaseRequestPromise]).then(axios.spread((...responses) => {
+      const spotify_response = responses[0]
+      const db_response = responses[1]
+      this.setState({
+          playlist: spotify_response.data.slice(0,50), // NOTE: ONLY GETTING FIRST 50 SONGS - MUST BE FIXED
+          playlist_comments : db_response.data.playlist_comments // getting an *object* of comments
+        })
+      })
     )
   }
 
@@ -75,19 +68,22 @@ class PlaylistTable extends React.Component {
                   {this.state.playlist != 'NULL' && <PlaylistHeader/> }
 
                   {this.state.playlist != 'NULL' &&
-        
-                  this.state.playlist.data
+                  this.state.playlist_comments != "NULL" && 
+                  this.state.playlist
                   .sort(
                     (song1, song2) => !( song2.added_at - song1.added_at )
                   )
-                  // Below, want to pass 
                   .map(
-                    song => <PlaylistRow 
+                    song => <PlaylistRow
+                    playlist_id = {this.props.playlist_id} 
                     user = {this.props.display_name} 
-                    rowSong = {song} 
-                    playlist_id = {this.props.playlist_id}
+                    song_title = {song.track.name}
+                    artist = {song.track.artists[0].name}
+                    date_added = {song.added_at}
+                    song_id = {song.track.id}
+                    song_comments = { typeof(this.state.playlist_comments) === 'undefined' ? undefined : this.state.playlist_comments[`${song.track.id}`] }
                     />
-                    )}
+                  )}
 
                 </table>
 

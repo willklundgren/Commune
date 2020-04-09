@@ -11,7 +11,7 @@ function getAccessToken ( url ) {
     }
     else {
       url = url.split("=");
-      console.log(url[1].split("&")[0])
+      // console.log(url[1].split("&")[0])
 
       // var access_token = url[1].slice(0,162); old method
       var access_token = url[1].split("&")[0];
@@ -33,7 +33,7 @@ class SessionContainer extends React.Component {
     }
 
     componentDidMount() {
-      console.log("session info is:", this.props.sessionInfo)
+      // console.log("session info is:", this.props.sessionInfo)
         var access_token, refresh_token, gotTokens, url_string;
 
         // Extract the access and refresh tokens from the pathname in sessionInfo prop
