@@ -52,6 +52,7 @@ class CommentBox extends React.Component {
         //session_comments: this.props.song_comments,
         session_comments: (typeof(this.props.song_comments) === 'undefined') ? [] : this.props.song_comments.reverse(),
         show_all: false,
+        show_less : false,
         newly_posted_comment_count: 0
     }
     console.log("Array of song comments from the database:", this.props.song_comments)
@@ -70,7 +71,14 @@ class CommentBox extends React.Component {
   }
 
   showAllComments = () => (
-    this.setState( {show_all:  true  } )
+
+    // TO DO 4/9/20: fix bug where "View more comments" is shown when there are no comments to begin with.
+
+
+    this.setState( prevState => ( { 
+      show_all : !prevState.show_all,
+      show_less : !prevState.show_less
+    } ) )
   )
   
   // Send a submitted comment to the database.
@@ -108,7 +116,8 @@ class CommentBox extends React.Component {
       this.setState( {
         // session_comments: this.state.session_comments.concat([ comment_to_add]),
         session_comments: [comment_to_add].concat(this.state.session_comments),
-        newly_posted_comment_count : this.state.newly_posted_comment_count + 1
+        newly_posted_comment_count : this.state.newly_posted_comment_count + 1,
+
       
       })
     } 
@@ -179,7 +188,9 @@ class CommentBox extends React.Component {
           return this.state.session_comments.map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
         }
         else {
-          return this.state.session_comments.slice(0,3 + this.state.newly_posted_comment_count).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
+          // return this.state.session_comments.slice(0, 3 + this.state.newly_posted_comment_count).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
+          return this.state.session_comments.slice(0, 3).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
+
         }
       }
       // Handling case where session_comments is nonzero but props.song_comments is undefined!
@@ -208,7 +219,7 @@ class CommentBox extends React.Component {
 
         {this.showComments()}
 
-        <button onClick = {this.showAllComments}>See more comments</button>
+        <button onClick = {this.showAllComments}>{this.state.show_all ? "View less comments" : "View more comments"}</button>
         
       </div>
 
