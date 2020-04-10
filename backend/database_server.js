@@ -19,7 +19,7 @@ app.use(cors())
 // If the playlist doesn't exist, create a MongoDB document with an empty
 // ...playlist_comments array.
 app.get("/playlist_comments/:playlist_id/:playlist_name", function (req, res) {
-  console.log("in playlist_comments")
+  // console.log("in playlist_comments")
 
   MongoClient.connect(url_local, function(err, client) {
     var requested_playlist_id = req.params.playlist_id,
@@ -28,7 +28,7 @@ app.get("/playlist_comments/:playlist_id/:playlist_name", function (req, res) {
     var db = client.db("playlist_info")
     db.collection('commentary_new').findOne({_id: requested_playlist_id},
       {projection: {_id:0, playlist_comments:1,}}, function(err, result) {
-      if (err) throw err;
+      if (err) throw err
       // if you found something, send it back.
       else if (result != null) {
         // FUTURE WORK (SEE TODOIST):

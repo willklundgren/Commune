@@ -29,9 +29,18 @@ function formattedDate(date) {
   var am_or_pm;
       
   // Want formatting as Mar 3, 2011
-  if (hour > 12) {
+  if (hour == 12) {
+    hour = 12
+    am_or_pm = " PM"
+  }
+  else if (hour > 12) {
     hour = (hour - 12)
     am_or_pm = " PM"
+  }
+  // Case where it's 12:00 AM - 12:59 AM
+  else if (hour == 0) {
+    hour = 12
+    am_or_pm = " AM"
   }
   else {
     am_or_pm = " AM"
@@ -49,7 +58,11 @@ class CommentBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        //session_comments: this.props.song_comments,
+        // NOTE: Because we want to update the UI after a comment deletion, we should immediately make sure the state
+        // of the CommentBox contains all the comment objects from the song_comments props. We'll store
+        // this in session_comments, even though it is against React best practices.
+        // Then, when rendering, only session_comments is shown. After deletion, simply call setState and 
+        // change the contents of session_comments to reflect the change.
         session_comments: (typeof(this.props.song_comments) === 'undefined') ? [] : this.props.song_comments.reverse(),
         show_all: false,
         show_less : false,
@@ -60,21 +73,11 @@ class CommentBox extends React.Component {
 
   componentDidMount () {
     console.log("In CommentBox's componentDidMount.")
-    // Because we want to update the UI after a comment deletion, we should immediately make sure the state
-    // of the CommentBox contains all the comment objects from the song_comments prop, e.g. in session_comments,
-    // rather than 
-    // Then, when rendering, only session_comments is shown. After deletion, simply call setState and 
-    // change the contents of session_comments to reflect the change.
-    
 
 
   }
 
-  showAllComments = () => (
-
-    // TO DO 4/9/20: fix bug where "View more comments" is shown when there are no comments to begin with.
-
-
+  toggleAllComments = () => (
     this.setState( prevState => ( { 
       show_all : !prevState.show_all,
       show_less : !prevState.show_less
@@ -102,26 +105,23 @@ class CommentBox extends React.Component {
           user : user
       }
 
+      // REQUEST FOR OLD DATABASE BELOW...
       // axios.post(`${mongodb_azure_url}` + '/submit_comment', comment_info)
       //   .then( res => console.log(res))
 
-      // NEW CODE FOR RE-CONFIGURED DATABASE BELOW
- 
+      // NEW CODE FOR **RE-CONFIGURED DATABASE** BELOW...
       axios.post( `${local_db_url}/post_comment`, comment_info )
       // .then(  response => console.log(response)  )
-
-      // END OF NEW-DATABASE-RELATED CODE
 
       var comment_to_add = {"comment": comment, "date_and_time": date_and_time, "user": user}
       this.setState( {
         // session_comments: this.state.session_comments.concat([ comment_to_add]),
         session_comments: [comment_to_add].concat(this.state.session_comments),
         newly_posted_comment_count : this.state.newly_posted_comment_count + 1,
-
-      
       })
+      document.getElementById(`${this.props.id}`).reset();
+      
     } 
-
 
     makeComment = (commentObject, commentIndex) => {
       var comment = commentObject.comment,
@@ -130,31 +130,15 @@ class CommentBox extends React.Component {
 
       return <div>
         {comment}<span className="CommentInfo">- {user}, {formattedDate(date_and_time)}</span>
-        {user == this.props.user && <button onClick = {() => this.deleteComment( date_and_time, commentIndex )}>Delete</button> }
+        {user == this.props.user && <button className = "CommentDeletionButton" onClick = {() => this.deleteComment( date_and_time, commentIndex )}>Delete</button> }
       </div>
     }
 
     // Delete a comment from the database
 
-    // Input: some type of identifer to get the comment to be deleted, either from 
-    // the "props" comments or from the session_comments (i.e. the most recent comments)
-    // TO DO: DETERMINE WHAT THE IDENTIFIER IS ^
-    // Output: (nothing)
-    // Desired outcomes: 
-    // 1) delete the comment from the database
-    // if CommentBox's comment array exactly mirrors the corresponding song_comments array in 
-    // the database, then the input can simply be the array index
-    //  1a) Make an axios call, supplying the proper parameter(s)
-    //  1b) Handle the rest on the backend
-    // 2) update the UI accordingly.
-    //  2a) step 1...
-    //  2b) step 2...
-
-    // 4/6/20 TO DO: make the Axios request below a POST request, and pass the database server a 
-    // copy of the to-be-deleted comment's date_and_time field. Then, on the backend, simply
-    // use this string as an identifier for a $pull array modifier, which will then remove the comment
-    // from the database.
-
+    // Input: A comment's date_and_time field (for the backend), and index in UI array.
+    // Outcomes: 1) delete the comment from the database, 2) update the UI accordingly.
+  
     deleteComment = ( comment_date_and_time, commentIndex  ) => {
       console.log("In deleteComment")
       // Make Axios deletion request
@@ -169,10 +153,6 @@ class CommentBox extends React.Component {
           }
 
       axios.post( delete_comment_url_local, comment_deletion_info ).then( response => console.log(response.data) )
-
-      // TO DO: Update the frontend to perfectly reflect changes to the database.
-      // Notes...
-      // user could have deleted either: 1) a props comment, or 2) a session comment
 
       var session_comments_duplicate = [...this.state.session_comments]
       session_comments_duplicate.splice(commentIndex, 1)
@@ -193,39 +173,38 @@ class CommentBox extends React.Component {
 
         }
       }
-      // Handling case where session_comments is nonzero but props.song_comments is undefined!
-      // else if ( typeof(this.state.session_comments) != 'undefined') {
-      //   return this.state.session_comments.map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
-      // }
-
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      // compare prev comments to new comments
-      if (prevState.comments != this.state.session_comments) {
-        // console.log("State change")
-        // this.setState( {comments: comments} )
+    showCommentViewButton = () => {
+
+      if (this.state.session_comments.length > 3 ) {
+        if (this.state.show_all) {
+          return <button className = "CommentViewsButton" onClick = {this.toggleAllComments}>View less comments...</button>
+        }
+        else {
+          return <button className = "CommentViewsButton" onClick = {this.toggleAllComments}>View more comments...</button>
+        }
       }
     }
 
-  render() {
-    return (
-      <div>
+    render() {
+      return (
+        <div>
+          
+          <form onSubmit={this.handleSubmit} id = {this.props.id} autocomplete="off">
+              <input className = "CommentTextInput" type="text" name="comment" placeholder="Write a comment..."/>
+              <input className = "CommentSubmissionButton" type="submit" value="Submit"/>
+          </form>
+
+          {this.showComments()}
+
+          {this.showCommentViewButton()}
+          
+        </div>
+
         
-        <form onSubmit={this.handleSubmit}>
-            <input type="text" name="comment"/>
-            <input type="submit" value="Submit"/>
-        </form>
-
-        {this.showComments()}
-
-        <button onClick = {this.showAllComments}>{this.state.show_all ? "View less comments" : "View more comments"}</button>
-        
-      </div>
-
-       
-    );
-  }
+      );
+    }
 }
 
 export default CommentBox;
