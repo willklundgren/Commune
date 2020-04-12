@@ -1,0 +1,19 @@
+.LandingPage {
+    /* background-color: green; */
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    text-align: center;
+}
+
+.LandingPageTitle {
+    font-size: xxx-large;
+    font-weight: 600; 
+    font-family: 'Exo 2';
+    padding: 5px;
+}
+
+.LandingPageDescription {
+    font-size: large;
+    padding-bottom: 10px;
+}

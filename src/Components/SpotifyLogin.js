@@ -3,9 +3,6 @@ import { useLocation } from "react-router-dom";
 import './SpotifyLogin.css';
 import axios from 'axios';
 
-
-
-
 class SpotifyLogin extends React.Component {
     constructor(props) {
       super(props);
@@ -19,19 +16,21 @@ class SpotifyLogin extends React.Component {
       console.log(this.props.spotify_login_url)
       axios.get(this.props.spotify_login_url, {
         headers: {
-          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-          // "Upgrade-Insecure-Requests": 1
-        }
-      }   
-        )
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            // "Upgrade-Insecure-Requests": 1
+          }
+        }   
+      )
+      // .then(response => console.log(response))
     }
 
     isAuthenticated = () => {
       if (!this.props.authenticated) {
         return (
         <div className = "LoginButtonSignedOut">
-          <a href = {this.props.spotify_login_url}>Login to Spotify</a>
-          {/* <button onClick={this.loginToSpotify}>Login</button> */}
+          <a className = "SpotifyLoginHREF" href = {this.props.spotify_login_url}>Login to Spotify</a>
+          {/* <button onClick={this.loginToSpotify}>Login to Spotify</button> */}
+          
         </div>
         )
       }

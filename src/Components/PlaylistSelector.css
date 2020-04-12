@@ -20,3 +20,21 @@
     /* font-weight: bold; */
     /* background-color:goldenrod */
 }
+.PlaylistSubmissionButton {
+    border-radius: 5px;
+    border: 1px solid black;
+    /* padding: 1px 15px; */
+    padding: 1px 6px;
+    font-size: 12px;
+}
+
+.SelectionDropdown {
+    margin: 5px;
+    text-align: center;
+    font-size: medium;
+    border-radius: 3px;
+    border: 1px solid black;
+    /* padding: 1px 15px; */
+    padding: 1px 6px;
+}
+

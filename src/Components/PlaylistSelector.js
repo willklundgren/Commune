@@ -8,8 +8,6 @@ import axios from 'axios';
 import { useLocation, Redirect } from "react-router-dom"
 import './PlaylistSelector.css';
 
-const spotifyApi = new SpotifyWebApi();
-
 // Parse URL string for access and refresh tokens
 // Return array of form [accessToken, refreshToken]
 function getAccessToken ( url ) {
@@ -41,15 +39,7 @@ class PlaylistSelector extends React.Component {
   }
   
   componentDidMount() {
-    // console.log("in PlaylistSelector's componentDidMount...")
-    
-   // console.log(tokens)
-    
-    spotifyApi.setAccessToken(this.props.access_token);
-    // .then( response => this.setState({profile: response}) )
-    // console.log(this.state.user_id)
-
-    // Get the user's available playlists and load them into state
+    // Get a list of collaborative playlists
     this.getPlaylistData(this.props.access_token)
   }
   
@@ -143,12 +133,12 @@ class PlaylistSelector extends React.Component {
               <label>
                 <span>Select a playlist...</span>
                 <br></br>
-                <select className="SelectionElements" onChange={this.handleChange}>
-                  <option selected value = "No playlist selected.">(Select an option)</option>
+                <select className="SelectionDropdown" onChange={this.handleChange}>
+                  <option selected value = "No playlist selected.">(Select a playlist)</option>
                   {this.showPlaylistOptions(this.state.playlists_available)}
                 </select>
               </label>
-              <input type="submit" value="Submit" />
+              <input className="PlaylistSubmissionButton" type="submit" value="Submit" />
           </form>
           <button onClick={this.getMorePlaylists}>Load more playlists</button>
         </div>

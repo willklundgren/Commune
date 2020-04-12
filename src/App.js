@@ -22,6 +22,7 @@ import {
 } from "react-router-dom";
 import SessionContainer from './Components/SessionContainer';
 import config from "./config.js"
+import LandingPage from './Components/LandingPage';
 // const config = require('./config');
 const { db: { host, port, name } } = config;
 console.log({config})
@@ -64,14 +65,12 @@ function App() {
           render = { routeProps => console.log(routeProps)  } >
           </Route>
 
-          <Route 
-            path="/test"
-            render= { routeProps => <span>hi</span>  }
-          />
-
           <Route
-            path="/">
-            <NavBar spotify_login_url={spotify_login_url} authenticated={false}/>
+            path="/"><div>
+              {/* <NavBar spotify_login_url={spotify_login_url} authenticated={false} /> */}
+              <LandingPage spotify_login_url={spotify_login_url} authenticated={false} />
+            </div>
+            
             {/* <DatabaseTest /> */}
           </Route>
 
