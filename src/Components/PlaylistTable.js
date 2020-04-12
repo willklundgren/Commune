@@ -52,10 +52,9 @@ class PlaylistTable extends React.Component {
 
     return (
       <Fragment>
-        <div>
+        <div className="PlaylistTable">
 
           {/* <Link to="/">Sign out</Link> */}
-          
 
           {this.state.playlist != 'NULL' &&
               <div className="PlaylistName">
@@ -64,6 +63,11 @@ class PlaylistTable extends React.Component {
           }
       
                 <table className='PlaylistTable'> 
+
+                {/* <col className = "TestColumn" ></col>
+                <col className = "TestColumn" ></col>
+                <col className = "TestColumn" ></col>
+                <col className = "TestColumn" ></col> */}
 
                   {this.state.playlist != 'NULL' && <PlaylistHeader/> }
 
@@ -81,6 +85,7 @@ class PlaylistTable extends React.Component {
                     artist = {song.track.artists[0].name}
                     date_added = {song.added_at}
                     song_id = {song.track.id}
+                    // added_by = {song.added_by.id}
                     song_comments = { typeof(this.state.playlist_comments) === 'undefined' ? undefined : this.state.playlist_comments[`${song.track.id}`] }
                     />
                   )}

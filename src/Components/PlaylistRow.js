@@ -31,11 +31,12 @@ class PlaylistRow extends React.Component {
     render() {
         return (
             <Fragment>
-                <tr>
-                    <td className='PlaylistRow'>{this.props.song_title}</td>
-                    <td className='PlaylistRow'>{this.props.artist}</td>
-                    <td className='PlaylistRow'>{this.formatDate(new Date(this.props.date_added))}</td>
-                    <td className='PlaylistRow'>
+                <tr className='PlaylistRow'>
+                    <td className='SongTitle'>{this.props.song_title}</td>
+                    <td className='ArtistName'>{this.props.artist}</td>
+                    <td className='DateAdded'>{this.formatDate(new Date(this.props.date_added))}</td>
+                    {/* <td className='AddedBy'>{this.props.added_by}</td> */}
+                    <td className='Comment'>
                         <CommentBox
                         id = {this.props.song_id}
                         user = {this.props.user}

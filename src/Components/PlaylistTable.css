@@ -1,6 +1,6 @@
 .PlaylistTable {
     /* font-family: 'Exo 2' */
-    
+    margin:auto
 }
 
 .PlaylistName {
@@ -10,5 +10,5 @@
     padding-top: 0px;
     padding-left: 4px;
     padding-right: 4px;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
 }

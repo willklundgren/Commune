@@ -1,7 +1,7 @@
 .PlaylistSelector {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    /* display: flex;
+    flex-direction: row; */
+    /* justify-content: center; */
     padding: 5px;
     align-items: center;
     /* font-family: 'Exo 2' */

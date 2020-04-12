@@ -71,12 +71,6 @@ class CommentBox extends React.Component {
     console.log("Array of song comments from the database:", this.props.song_comments)
   }
 
-  componentDidMount () {
-    console.log("In CommentBox's componentDidMount.")
-
-
-  }
-
   toggleAllComments = () => (
     this.setState( prevState => ( { 
       show_all : !prevState.show_all,
@@ -128,9 +122,10 @@ class CommentBox extends React.Component {
           user = commentObject.user,
           date_and_time = commentObject.date_and_time
 
-      return <div>
-        {comment}<span className="CommentInfo">- {user}, {formattedDate(date_and_time)}</span>
-        {user == this.props.user && <button className = "CommentDeletionButton" onClick = {() => this.deleteComment( date_and_time, commentIndex )}>Delete</button> }
+      return <div className="CommentWrapper">
+        <span className="CommentText">{comment}</span><span className="CommentInfo">- {user}, {formattedDate(date_and_time)}</span>
+        {user == this.props.user && 
+        <button className = "CommentDeletionButton" onClick = {() => this.deleteComment( date_and_time, commentIndex )}>Delete</button> }
       </div>
     }
 
@@ -154,6 +149,7 @@ class CommentBox extends React.Component {
 
       axios.post( delete_comment_url_local, comment_deletion_info ).then( response => console.log(response.data) )
 
+      // Update the UI to reflect the deletion.
       var session_comments_duplicate = [...this.state.session_comments]
       session_comments_duplicate.splice(commentIndex, 1)
       this.setState({ session_comments : session_comments_duplicate })
@@ -189,7 +185,7 @@ class CommentBox extends React.Component {
 
     render() {
       return (
-        <div>
+        <div className = "CommentBox">
           
           <form onSubmit={this.handleSubmit} id = {this.props.id} autocomplete="off">
               <input className = "CommentTextInput" type="text" name="comment" placeholder="Write a comment..."/>

@@ -17,6 +17,7 @@ class PlaylistHeader extends React.Component {
               <th className = 'PlaylistHeaderSong'>Song</th>
               <th className = 'PlaylistHeaderArtist'>Artist</th>
               <th className = 'PlaylistHeaderDate'>Date Added</th>
+              {/* <th className = 'PlaylistHeaderAddedBy'>Added By</th> */}
               <th className = 'PlaylistHeaderComments'>Comments</th>
           </tr>
       </Fragment>

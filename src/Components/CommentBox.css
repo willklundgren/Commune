@@ -14,11 +14,22 @@
 
 .CommentSubmissionButton {
     border-radius: 5px;
-    padding: 1px 15px;
+    border: 1px solid black;
+    /* padding: 1px 15px; */
+    padding: 1px 6px;
+    font-size: 10px;
+}
+
+.CommentWrapper button {
+    display: none;
+}
+
+.CommentWrapper:hover button {
+    display: inline;
 }
 
 .CommentDeletionButton {
-    background-color: #ff3333;
+    background-color: #ff1a1a;
     border-radius: 5px;
     font-size: 10px;
     border: 1px solid black
@@ -30,4 +41,15 @@
     margin-top: 4px;
     padding: 1px 6px;
     font-size: 10px;
+    width: 120px;
+}
+
+/* Maybe delete below */
+.CommentBox {
+    display: flex;
+    flex-direction: column;
+}
+
+.CommentText {
+    /* background-color: blue; */
 }
