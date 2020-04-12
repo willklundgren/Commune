@@ -72,7 +72,7 @@ function App() {
           <Route
             path="/">
             <NavBar spotify_login_url={spotify_login_url} authenticated={false}/>
-            <DatabaseTest />
+            {/* <DatabaseTest /> */}
           </Route>
 
         </Switch>
