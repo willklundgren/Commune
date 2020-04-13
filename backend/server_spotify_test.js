@@ -151,13 +151,12 @@ app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( r
   console.log("Getting all playlist tracks...")
   console.log(req.params)
 
-  var playlist_id = req.params.playlist_id
-  var token = req.params.access_token
-  var accumulated_playlist = []
-  var more_tracks = true
-  var playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
+  var playlist_id = req.params.playlist_id,
+      token = req.params.access_token,
+      accumulated_playlist = [],
+      more_tracks = true,
+      playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
 
-  // var output = await getPlaylists(playlist_tracks_url)
   while (more_tracks != null) {
     console.log("inside loop")
     await axios.get( playlist_tracks_url, {
@@ -167,12 +166,12 @@ app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( r
     } ).then( tracks => {
         console.log(tracks)
         if (tracks.data.next == null) {
-          console.log("about to send back data...")
+          console.log("about to send back tracks data...")
           if (accumulated_playlist == []) {
             accumulated_playlist = tracks.data.items
           }
           else {
-            accumulated_playlist = accumulated_playlist.concat(tracks.data.items)
+            accumulated_playlist.push(...tracks.data.items)
           }
           res.send(accumulated_playlist)
           more_tracks = null
@@ -182,7 +181,8 @@ app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( r
             accumulated_playlist = tracks.data.items
           }
           else {
-            accumulated_playlist.push(tracks.data.items)
+            // accumulated_playlist = accumulated_playlist.concat(...tracks.data.items)
+            accumulated_playlist.push(...tracks.data.items)
           }
           playlist_tracks_url = tracks.data.next
         }  
@@ -226,7 +226,7 @@ app.get( '/get_all_playlists/:user_id/:access_token' , async function (req, res)
               accumulated_playlists = filtered_playlists
             }
             else {
-              accumulated_playlists = accumulated_playlists.concat(...filtered_playlists)
+              accumulated_playlists.push(...filtered_playlists)
             }
             res.send(accumulated_playlists)
             more_playlists = null

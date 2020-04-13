@@ -28,24 +28,20 @@ class PlaylistTable extends React.Component {
 
     var playlist_tracks_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
     var stuff = `https://api.spotify.com/v1/me`
-    var playlist_songs
+    var playlist_tracks_url_local = `http://localhost:3223/get_all_playlist_tracks/${playlist_id}/${access_token}`
    
     // Call to the Spotify server...
-    var SpotifyRequestPromise = axios.get( `http://52.246.250.124:3223/get_all_playlist_tracks/${playlist_id}/${access_token}`)
+    var SpotifyRequestPromise = axios.get( playlist_tracks_url_local )
     var DatabaseRequestPromise = axios.get( playlist_comments_url_local  )
     axios.all([SpotifyRequestPromise, DatabaseRequestPromise]).then(axios.spread((...responses) => {
       const spotify_response = responses[0]
       const db_response = responses[1]
       this.setState({
-          playlist: spotify_response.data.slice(0,50), // NOTE: ONLY GETTING FIRST 50 SONGS - MUST BE FIXED
+          playlist: spotify_response.data, 
           playlist_comments : db_response.data.playlist_comments // getting an *object* of comments
         })
       })
     )
-  }
-
-  redirect() {
-    return <Redirect to="/"authenticated></Redirect>
   }
 
   render() {
