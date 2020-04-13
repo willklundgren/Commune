@@ -194,6 +194,59 @@ app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( r
   
 );
 
+// Get all collaborative playlists at once.
+// Input: user's Spotify ID, session access token
+
+app.get( '/get_all_playlists/:user_id/:access_token' , async function (req, res) {
+    console.log("In get_all_playlists")
+    var user_id = req.params.user_id,
+        token = req.params.access_token,
+        accumulated_playlists = [],
+        more_playlists = true,
+        limit = 50,
+        playlist_tracks_url = `https://api.spotify.com/v1/users/${user_id}/playlists?limit=${limit}`
+
+    while (more_playlists != null) {
+      console.log("inside get_all_playlists loop")
+      await axios.get( playlist_tracks_url, {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      } ).then( playlists => {
+
+          var filtered_playlists = playlists.data.items
+              .filter(item => item.collaborative == true)
+              .map(playlist => [playlist.name, playlist.id])
+
+          // console.log(filtered_playlists)
+
+          if (playlists.data.next == null) {
+            console.log("about to send back data...")
+            if (accumulated_playlists == []) {
+              accumulated_playlists = filtered_playlists
+            }
+            else {
+              accumulated_playlists = accumulated_playlists.concat(...filtered_playlists)
+            }
+            res.send(accumulated_playlists)
+            more_playlists = null
+          }
+          // there's still more tracks to retrieve...
+          else { // there's still more tracks to retrieve...
+            if (accumulated_playlists.length == 0) {
+              accumulated_playlists = filtered_playlists
+            }
+            else {
+              accumulated_playlists.push(...filtered_playlists)
+            }
+            playlist_tracks_url = playlists.data.next
+          }  
+        }
+      )
+    }
+  }
+)
+
 app.get('/refresh_token', function(req, res) {
 
   // requesting access token from refresh token

@@ -33,9 +33,7 @@ class PlaylistSelector extends React.Component {
       value: 'No playlist selected.',
       playlistSelected: false,
       spotify_playlist_index: 0
-    };
-    var limit = 50;
-    this.getMorePlaylists = this.getMorePlaylists.bind(this);
+    }
   }
   
   componentDidMount() {
@@ -44,29 +42,40 @@ class PlaylistSelector extends React.Component {
   }
   
 
-   getPlaylistData = (token) => {
+   getPlaylistData = ( token ) => {
       console.log("in getPlaylistData")
       var id = this.props.user_id;
       var limit = 50;
       var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
-
-      axios.get( url_string, {
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      } )
-      .then(response => {
-        console.log(response)
-        this.setState({
-          playlists_available: response.data.items
-            .filter(item => item.collaborative == true)
-            .map(playlist => [playlist.name, playlist.id]),
-          spotify_playlist_index: response.data.offset + limit
-          },
-          () => console.log("PlaylistSelector's playlist_available value is:", this.state.playlists_available))
-        // console.log(response.data.offset + limit)
+      var get_all_playlists_url = `http://localhost:3223/get_all_playlists/${id}/${token}`
+      
+      axios.get( get_all_playlists_url   )
+      .then( response =>
+        {
+          this.setState({
+            playlists_available: response.data
+          })
+          // console.log(response)
         }
       )
+
+      // axios.get( url_string, {
+      //   headers: {
+      //     "Authorization": "Bearer " + token
+      //   }
+      // } )
+      // .then(response => {
+      //   console.log(response)
+      //   this.setState({
+      //     playlists_available: response.data.items
+      //       .filter(item => item.collaborative == true)
+      //       .map(playlist => [playlist.name, playlist.id]),
+      //     spotify_playlist_index: response.data.offset + limit
+      //     },
+      //     () => console.log("PlaylistSelector's playlist_available value is:", this.state.playlists_available))
+      //   // console.log(response.data.offset + limit)
+      //   }
+      // )
    }
 
    submitPlaylistSelection = (event, playlist_id) => {
@@ -97,35 +106,11 @@ class PlaylistSelector extends React.Component {
     }
   }
 
-  getMorePlaylists = () => {
-    console.log("current playlist index is ", this.state.spotify_playlist_index)
-    console.log(this.state.access_token)
-    var offset = this.state.spotify_playlist_index
-    var id = this.props.user_id
-    var limit = 50
-    var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}&offset=${offset}`
-    axios.get( url_string, {
-          headers: {
-            "Authorization": "Bearer " + this.props.access_token
-          }
-        } )
-        .then(response => {
-          console.log(response)
-          this.setState({
-            playlists_available: response.data.items
-              .filter(item => item.collaborative == true)
-              .map(playlist => [playlist.name, playlist.id]),
-            spotify_playlist_index: response.data.offset + limit
-            });
-          console.log(response.data.offset + limit)
-          }
-        )
-  }
-
   render() {
 
     return (
       <div className="PlaylistSelector">
+        <div className="LandingPageTitle">Betterplay</div>
 
         {this.state.playlistSelected == false && 
         <div className="SelectionElements">
@@ -140,7 +125,7 @@ class PlaylistSelector extends React.Component {
               </label>
               <input className="PlaylistSubmissionButton" type="submit" value="Submit" />
           </form>
-          <button onClick={this.getMorePlaylists}>Load more playlists</button>
+          {/* <button onClick={this.getMorePlaylists}>Load more playlists</button> */}
         </div>
         }
 

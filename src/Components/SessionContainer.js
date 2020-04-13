@@ -67,16 +67,11 @@ class SessionContainer extends React.Component {
         <Fragment>
             {this.state.hasInfo == true &&
             <div>
-
-                <NavBar 
-                authenticated={true} 
-                user_display_name={this.state.user_display_name} 
-                />
-
+              
                 <PlaylistSelector
                 access_token = {this.state.access_token}
                 refresh_token = {this.state.refresh_token} 
-                user_id={this.state.user_id} 
+                user_id={this.state.user_id}
                 user_display_name={this.state.user_display_name}
                 /> 
 

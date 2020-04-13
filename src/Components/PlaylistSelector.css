@@ -38,3 +38,11 @@
     padding: 1px 6px;
 }
 
+.LandingPageTitle {
+    font-size: xxx-large;
+    text-align: center;
+    font-weight: 600; 
+    font-family: 'Exo 2';
+    padding: 5px;
+}
+
