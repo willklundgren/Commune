@@ -13,14 +13,16 @@ class PlaylistTable extends React.Component {
       playlist: "NULL",
       playlist_comments: "NULL",
       profile: false
-    };
+    }
+    console.log(props)
   }
 
   componentDidMount() {
+    var tableSessionInfo = this.props.table_data.location.state.tableSessionInfo
 
-    var playlist_id = this.props.playlist_id
-    var playlist_name = encodeURIComponent(this.props.playlist_name)
-    var access_token = this.props.access_token
+    var playlist_id = tableSessionInfo.playlist_id
+    var playlist_name = encodeURIComponent(tableSessionInfo.playlist_name)
+    var access_token = tableSessionInfo.access_token
     var url_string = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`
     var accumulated_playlist = []
     var more_tracks = true
@@ -48,13 +50,16 @@ class PlaylistTable extends React.Component {
 
     return (
       <Fragment>
+
+        <div className="LandingPageTitle">Betterplay</div>
+        
         <div className="PlaylistTable">
 
           {/* <Link to="/">Sign out</Link> */}
 
           {this.state.playlist != 'NULL' &&
               <div className="PlaylistName">
-              {this.props.playlist_name} 
+              {this.props.table_data.location.state.tableSessionInfo.playlist_name} 
               </div>
           }
       
@@ -75,8 +80,8 @@ class PlaylistTable extends React.Component {
                   )
                   .map(
                     song => <PlaylistRow
-                    playlist_id = {this.props.playlist_id} 
-                    user = {this.props.display_name} 
+                    playlist_id = {this.props.table_data.location.state.tableSessionInfo.playlist_id} 
+                    user = {this.props.table_data.location.state.tableSessionInfo.display_name} 
                     song_title = {song.track.name}
                     artist = {song.track.artists[0].name}
                     date_added = {song.added_at}

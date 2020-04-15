@@ -7,6 +7,7 @@ import PlaylistRow from './Components/PlaylistRow'
 import SpotifyLogin from './Components/SpotifyLogin';
 import PlaylistSelector from './Components/PlaylistSelector';
 import DatabaseTest from './Components/DatabaseTest';
+import PlaylistSelectorTest from './Components/PlaylistSelectorTest';
 
 import SpotifyWebApi from 'spotify-web-api-js';
 
@@ -39,47 +40,46 @@ if (dev != false) {
   spotify_login_url = 'http://localhost:' + spotify_port + '/login'
 }
 
-// console.log(config.get("test.well"))
-
-function App() {
+function App(props) {
  
   return (
-    <Router>
+    <div>
    
         <Switch>
 
           <Route 
-            path="/authenticated" 
-            
+            path="/authenticated"
             render={ routeProps => <SessionContainer sessionInfo={routeProps} /> }
+          > 
+          </Route>
+          
+          <Route 
+            path="/select_playlist"
+            render={ routeProps => <PlaylistSelectorTest user_data={routeProps} /> }
           >
-            {/* <Redirect to= {{
-              pathname: "/select_playlist",
-              state: {access_token: 4}
-            }}
-            ></Redirect> */}
-  
           </Route>
 
-          <Route path="/select_playlist"
-          render = { routeProps => console.log(routeProps)  } >
+          
+          <Route 
+            path="/playlist_selected"
+            render={ routeProps => <PlaylistTable table_data={routeProps} /> }
+          >
           </Route>
 
-          <Route
-            path="/"><div>
-              {/* <NavBar spotify_login_url={spotify_login_url} authenticated={false} /> */}
-              <LandingPage spotify_login_url={spotify_login_url} authenticated={false} />
-            </div>
-            
-            {/* <DatabaseTest /> */}
+          <Route path="/">
+            <LandingPage spotify_login_url={spotify_login_url} authenticated={false} />
           </Route>
 
         </Switch>
      
-    </Router>
-  );
+    </div>
+  )
 }
 
 export default App;
+
+
+
+
 
 

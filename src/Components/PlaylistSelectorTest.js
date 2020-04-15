@@ -5,27 +5,14 @@ import PlaylistRow from './PlaylistRow';
 import './PlaylistTable.css';
 import PlaylistTable from './PlaylistTable';
 import axios from 'axios';
-import { useLocation, Redirect, Route } from "react-router-dom"
+import { useLocation, Redirect, Route, Switch } from "react-router-dom"
 import './PlaylistSelector.css';
 
-// Parse URL string for access and refresh tokens
-// Return array of form [accessToken, refreshToken]
-function getAccessToken ( url ) {
-  if (url == "/") {
-    return ["ACCESS", "REFRESH", false];
-  }
-  else {
-    url = url.split("=");
-    var access_token = url[1].slice(0,162);
-    var refresh_token = url[2];
-    return [access_token, refresh_token, true];
-  }
-}
+// NOTE: this class contains the SessionInfo object as a prop, which in turn contains: user ID, display name, access token, refresh token
 
-class PlaylistSelector extends React.Component {
+class PlaylistSelectorTest extends React.Component {
   constructor(props) {
     super(props);
-    var propsObject;
     this.state = {
       playlist: "NULL",
       playlists_available: "NULL",
@@ -38,45 +25,44 @@ class PlaylistSelector extends React.Component {
   
   componentDidMount() {
     // Get a list of collaborative playlists
-    this.getPlaylistData(this.props.access_token)
+    this.getPlaylistData(this.props.user_data.location.state.userSessionInfo.access_token)
   }
-  
 
-   getPlaylistData = ( token ) => {
-      console.log("in getPlaylistData")
-      var id = this.props.user_id;
-      var limit = 50;
-      var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
-      var get_all_playlists_url = `http://localhost:3223/get_all_playlists/${id}/${token}`
-      
-      axios.get( get_all_playlists_url   )
-      .then( response =>
-        {
-          this.setState({
-            playlists_available: response.data
-          })
-          // console.log(response)
-        }
-      )
+  getPlaylistData = ( token ) => {
+    console.log("in getPlaylistData")
+    var id = this.props.user_data.location.state.userSessionInfo.user_id;
+    var limit = 50;
+    var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
+    var get_all_playlists_url = `http://localhost:3223/get_all_playlists/${id}/${token}`
+    
+    axios.get( get_all_playlists_url   )
+    .then( response =>
+      {
+        this.setState({
+          playlists_available: response.data
+        })
+        // console.log(response)
+      }
+    )
 
-      // axios.get( url_string, {
-      //   headers: {
-      //     "Authorization": "Bearer " + token
-      //   }
-      // } )
-      // .then(response => {
-      //   console.log(response)
-      //   this.setState({
-      //     playlists_available: response.data.items
-      //       .filter(item => item.collaborative == true)
-      //       .map(playlist => [playlist.name, playlist.id]),
-      //     spotify_playlist_index: response.data.offset + limit
-      //     },
-      //     () => console.log("PlaylistSelector's playlist_available value is:", this.state.playlists_available))
-      //   // console.log(response.data.offset + limit)
-      //   }
-      // )
-   }
+    // axios.get( url_string, {
+    //   headers: {
+    //     "Authorization": "Bearer " + token
+    //   }
+    // } )
+    // .then(response => {
+    //   console.log(response)
+    //   this.setState({
+    //     playlists_available: response.data.items
+    //       .filter(item => item.collaborative == true)
+    //       .map(playlist => [playlist.name, playlist.id]),
+    //     spotify_playlist_index: response.data.offset + limit
+    //     },
+    //     () => console.log("PlaylistSelector's playlist_available value is:", this.state.playlists_available))
+    //   // console.log(response.data.offset + limit)
+    //   }
+    // )
+  }
 
    submitPlaylistSelection = (event, playlist_id) => {
      event.preventDefault()
@@ -111,9 +97,8 @@ class PlaylistSelector extends React.Component {
     return (
 
       <div className="PlaylistSelector">
+        
         <div className="LandingPageTitle">Betterplay</div>
-
-  
 
         {this.state.playlistSelected == false && 
         <div className="SelectionElements">
@@ -133,16 +118,17 @@ class PlaylistSelector extends React.Component {
         }
 
         {this.state.playlistSelected == true &&
-
-        <Redirect to="/test"></Redirect>
-
-        // <PlaylistTable 
-        //       playlist_id = {this.state.value.slice( this.state.value.lastIndexOf(",") + 1) }
-        //       playlist_name = {this.state.value.slice( 0, this.state.value.lastIndexOf(",")) }
-        //       access_token = {this.props.access_token}
-        //       refresh_token = {this.props.refresh_token}
-        //       display_name = {this.props.user_display_name}
-        // />
+          <Redirect push to={{ 
+            pathname:"/playlist_selected", 
+            state: { tableSessionInfo : {
+              playlist_id : this.state.value.slice( this.state.value.lastIndexOf(",") + 1) ,
+              playlist_name : this.state.value.slice( 0, this.state.value.lastIndexOf(",")) ,
+              access_token : this.props.user_data.location.state.userSessionInfo.access_token,
+              refresh_token : this.props.user_data.location.state.userSessionInfo.refresh_token,
+              user_id : this.props.user_data.location.state.userSessionInfo.user_id,
+              display_name : this.props.user_data.location.state.userSessionInfo.user_display_name
+            } }
+          }}  /> 
         }
       
       </div>
@@ -150,4 +136,4 @@ class PlaylistSelector extends React.Component {
   }
 };
 
-export default PlaylistSelector;
+export default PlaylistSelectorTest;
