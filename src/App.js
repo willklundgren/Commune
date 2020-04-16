@@ -7,23 +7,16 @@ import PlaylistRow from './Components/PlaylistRow'
 import SpotifyLogin from './Components/SpotifyLogin';
 import PlaylistSelector from './Components/PlaylistSelector';
 import DatabaseTest from './Components/DatabaseTest';
-import PlaylistSelectorTest from './Components/PlaylistSelectorTest';
-
-import SpotifyWebApi from 'spotify-web-api-js';
-
 import ReactDOM from "react-dom";
 import {
   BrowserRouter as Router,
   Switch,
-  HashRouter,
   Route,
-  useParams,
-  useLocation,
-  Redirect
 } from "react-router-dom";
 import SessionContainer from './Components/SessionContainer';
 import config from "./config.js"
 import LandingPage from './Components/LandingPage';
+
 // const config = require('./config');
 const { db: { host, port, name } } = config;
 console.log({config})
@@ -55,13 +48,13 @@ function App(props) {
           
           <Route 
             path="/select_playlist"
-            render={ routeProps => <PlaylistSelectorTest user_data={routeProps} /> }
+            render={ routeProps => <PlaylistSelector user_data={routeProps} /> }
           >
           </Route>
 
           
           <Route 
-            path="/playlist_selected"
+            path="/playlist"
             render={ routeProps => <PlaylistTable table_data={routeProps} /> }
           >
           </Route>
@@ -77,6 +70,7 @@ function App(props) {
 }
 
 export default App;
+
 
 
 

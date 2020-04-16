@@ -58,7 +58,7 @@ class SessionContainer extends React.Component {
   render() {
     return (
       <Fragment>
-          { this.state.userSessionInfo == "NULL" && <div> Loading.... </div> }
+          {/* { this.state.userSessionInfo == "NULL" && <div> Loading.... </div> } */}
 
           { this.state.userSessionInfo != "NULL" &&
             <Redirect to={{ 
