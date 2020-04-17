@@ -80,6 +80,8 @@ class PlaylistSelector extends React.Component {
 
         <div className="LandingPageTitle">Betterplay</div>
 
+        {/* <div className="UserSignedIn">Signed in as {this.props.user_data.location.state.userSessionInfo.user_display_name }</div> */}
+
         {this.state.playlistSelected == false && 
         <div className="SelectionElements">
           <span>Select a playlist...</span>

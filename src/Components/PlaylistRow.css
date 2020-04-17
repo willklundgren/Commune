@@ -1,37 +1,38 @@
 
 .SongTitle {
-  width: 150px;
-  max-width: 200px;
+  /* width: 150px;
+  max-width: 200px; */
   padding: inherit;
   border: inherit;
 }
 
 .ArtistName {
-  width: 130px;
-  max-width: 200px;
+  /* width: 130px;
+  max-width: 200px; */
   padding: inherit;
   border: inherit;
 }
 
 .DateAdded {
-  width: 100px;
-  max-width: 200px;
+  /* width: 100px;
+  max-width: 200px; */
   padding: inherit;
   border: inherit
 }
 
 .AddedBy {
-  width: 100px;
-  max-width: 200px;
+  /* width: 100px;
+  max-width: 200px; */
   padding: inherit;
   border: inherit
 }
 
 .Comment {
-  width: 400px;
-  max-width: 400px;
+  /* width: 400px;
+  max-width: 400px; */
   padding: inherit;
   border: inherit;
+  word-break: break-word;
 }
 
 .PlaylistRow {

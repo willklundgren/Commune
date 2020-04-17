@@ -46,3 +46,8 @@
     padding: 5px;
 }
 
+.UserSignedIn {
+    font-size: small;
+    text-align: center;
+}
+

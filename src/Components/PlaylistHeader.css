@@ -8,28 +8,32 @@
     text-align: left;
     padding: 5px;
     border: 1px solid black;
-    /* width: 15% */
+    width: 20%;
+    max-width: 20%;
   }
 
   .PlaylistHeaderArtist {
     text-align: left;
     padding: 5px;
     border: 1px solid black;
-    /* width: 15% */
+    width: 20%;
+    max-width: 20%;
   }
 
   .PlaylistHeaderDate {
     text-align: left;
     padding: 5px;
     border: 1px solid black;
-    /* width: 10% */
+    width: 15%;
+    max-width: 15%;
   }
 
   .PlaylistHeaderComments {
     text-align: left;
     padding: 5px;
     border: 1px solid black;
-    /* width: 60% */
+    width: 45%;
+    max-width: 45%;
   }
 
   .PlaylistHeaderAddedBy {
