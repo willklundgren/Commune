@@ -4,6 +4,7 @@ import PlaylistHeader from './PlaylistHeader'
 import PlaylistRow from './PlaylistRow';
 import './PlaylistTable.css';
 import { Link, Redirect, NavLink } from 'react-router-dom';
+import NavBar from './NavBar'
 import axios from 'axios';
 
 class PlaylistTable extends React.Component {
@@ -51,18 +52,16 @@ class PlaylistTable extends React.Component {
     return (
       <Fragment>
 
-        <div className="LandingPageTitle">Betterplay</div>
-        
-        <div className="PlaylistTable">
+        {/* <div className="LandingPageTitle">Betterplay</div> */}
+        <NavBar  
+          user_display_name = {this.props.table_data.location.state.tableSessionInfo.display_name}
+          spotify_login_url = "NULL - at table component"
+          authenticated = {true}
+          playlist_name = {this.props.table_data.location.state.tableSessionInfo.playlist_name}
+        />
 
-          {/* <Link to="/">Sign out</Link> */}
+        <div>
 
-          {this.state.playlist != 'NULL' &&
-              <div className="PlaylistName">
-              {this.props.table_data.location.state.tableSessionInfo.playlist_name} 
-              </div>
-          }
-      
                 <table className='PlaylistTable'> 
 
                 {/* <col className = "TestColumn" ></col>

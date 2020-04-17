@@ -11,8 +11,13 @@ function NavBar(props) {
   let pathname = location.pathname;
   return (
     <div className="NavBar">
-        <div className="Title">Betterplay</div>
-        <SpotifyLogin user_display_name={props.user_display_name} spotify_login_url = {props.spotify_login_url} authenticated = {props.authenticated}/>
+        <div className="NavBarTitle">Betterplay</div>
+        <div className="NavBarPlaylistName"><span>{props.playlist_name}</span></div>
+        <SpotifyLogin 
+          user_display_name={props.user_display_name}
+          spotify_login_url = {props.spotify_login_url}
+          authenticated = {props.authenticated}
+        />
     </div>
   );
 }
