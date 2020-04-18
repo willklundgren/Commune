@@ -8,30 +8,13 @@ import SpotifyLogin from './Components/SpotifyLogin';
 import PlaylistSelector from './Components/PlaylistSelector';
 import DatabaseTest from './Components/DatabaseTest';
 import ReactDOM from "react-dom";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SessionContainer from './Components/SessionContainer';
-import config from "./config.js"
 import LandingPage from './Components/LandingPage';
 
-// const config = require('./config');
-const { db: { host, port, name } } = config;
-console.log({config})
-
-var azure_public_ip = '52.246.250.124',
-    spotify_port = 3223, // Static IP from Azure VM
-    spotify_login_url = 'http://' + azure_public_ip + ':' + spotify_port + '/login'
-
-// **DO NOT CHANGE BELOW LINE - USED BY SHELL SCRIPT**
-var dev = true
-// *********************************
-
-if (dev != false) {
-  spotify_login_url = 'http://localhost:' + spotify_port + '/login'
-}
+import { frontend_dev_config as config } from "./frontend_config.js" // For DEVELOPMENT
+// import { frontend_prod_config as config } from "./frontend_config.js" // For PRODUCTION
+console.log(config)
 
 function App(props) {
  
@@ -60,7 +43,7 @@ function App(props) {
           </Route>
 
           <Route path="/">
-            <LandingPage spotify_login_url={spotify_login_url} authenticated={false} />
+            <LandingPage spotify_login_url={`${config.spotify_url}/login`} authenticated={false} />
           </Route>
 
         </Switch>

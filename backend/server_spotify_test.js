@@ -8,7 +8,6 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const axios = require('axios').default;
 
-
 // Spotify application credentials
 var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // My client ID
 var client_secret = '4f39d523b69f47b3bee1e1662b545163'; // My secret

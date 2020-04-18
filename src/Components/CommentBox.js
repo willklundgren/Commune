@@ -2,19 +2,11 @@ import React, { Fragment } from 'react';
 import axios from 'axios';
 import "./CommentBox.css"
 
-var azure_public_ip = '52.246.250.124' // Static IP from Azure VM
-var database_port = 4500;
-var mongodb_azure_url = 'http://' + azure_public_ip + ':' + database_port;
-var local_db_url = 'http://localhost:' + database_port
+import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
+// import { frontend_prod_config as config } from "./frontend_config.js" // For PRODUCTION
 
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-]
-
-const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June",
-  "July", "August", "Sep", "Oct", "Nov", "Dec"
-]
-
+const db_url = config.database_url
+const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"]
 const comment_default_limit = 3
 
 function formattedDate(date) {
@@ -104,7 +96,7 @@ class CommentBox extends React.Component {
       //   .then( res => console.log(res))
 
       // NEW CODE FOR **RE-CONFIGURED DATABASE** BELOW...
-      axios.post( `${local_db_url}/post_comment`, comment_info )
+      axios.post( `${db_url}/post_comment`, comment_info )
       // .then(  response => console.log(response)  )
 
       var comment_to_add = {"comment": comment, "date_and_time": date_and_time, "user": user}
@@ -140,7 +132,7 @@ class CommentBox extends React.Component {
       // input: playlist_id, song_id, date_and_time
       var playlist_id = this.props.playlist_id,
           song_id = this.props.id,
-          delete_comment_url_local = `${local_db_url}/delete_comment`,
+          delete_comment_url_local = `${db_url}/delete_comment`,
           comment_deletion_info = {
             playlist_id : playlist_id,
             song_id : song_id,
@@ -165,7 +157,7 @@ class CommentBox extends React.Component {
         }
         else {
           // return this.state.session_comments.slice(0, 3 + this.state.newly_posted_comment_count).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
-          return this.state.session_comments.slice(0, 3).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
+          return this.state.session_comments.slice(0, comment_default_limit).map( (commentObj, commentIndex) => this.makeComment(commentObj, commentIndex))
 
         }
       }

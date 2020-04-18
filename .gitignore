@@ -25,7 +25,8 @@ yarn-error.log*
 .vscode
 /Miscellaneous
 server_spotify_prod_test.js
-config.js
+frontend_config.js
+TEST frontend_config.js
 DeploymentProcess.txt
 /src/Components/testformattedDate.js
 backend/mongo_db_test.js
