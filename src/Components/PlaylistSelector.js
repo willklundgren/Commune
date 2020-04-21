@@ -8,10 +8,8 @@ import axios from 'axios';
 import { useLocation, Redirect, Route, Switch } from "react-router-dom"
 import './PlaylistSelector.css';
 
-import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
-// import { frontend_prod_config as config } from "./frontend_config.js" // For PRODUCTION
-
-// NOTE: this class contains the SessionInfo object as a prop, which in turn contains: user ID, display name, access token, refresh token
+// import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
+import { frontend_prod_config as config } from "../frontend_config.js" // For PRODUCTION
 
 class PlaylistSelector extends React.Component {
   constructor(props) {
@@ -36,7 +34,7 @@ class PlaylistSelector extends React.Component {
     var id = this.props.user_data.location.state.userSessionInfo.user_id;
     var limit = 50;
     var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
-    var get_all_playlists_url = `${config.spotify_url}/get_all_playlists/${id}/${token}`
+    var get_all_playlists_url = `/get_all_playlists/${id}/${token}`
     
     axios.get( get_all_playlists_url   )
     .then( response =>

@@ -5,10 +5,13 @@ import { useLocation } from "react-router-dom";
 
 function LandingPage(props) {
   // console.log(this.props.location)
-  let location = useLocation();
-  console.log(location)
-  console.log("react router location:" )
-  let pathname = location.pathname;
+
+  console.log("location:", useLocation())
+  let app_location = useLocation();
+  if ( app_location.hash != "" ) {
+    console.log("Authenticated...")
+  }
+
   return (
     <div className="LandingPage">
           <div className="LandingPageTitle">Betterplay</div>

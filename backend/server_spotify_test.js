@@ -33,6 +33,8 @@ var app = express();
 app.use(cors())
    .use(cookieParser());
 
+   
+
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -73,6 +75,8 @@ app.get('/callback', function(req, res, next) {
 
   // your application requests refresh and access tokens
   // after checking the state parameter
+
+  var placeholder = true
 
 
   var code = req.query.code || null;
@@ -123,7 +127,7 @@ app.get('/callback', function(req, res, next) {
        // res.send("access token ready")
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://' + 'localhost:' + '3000' + '/authenticated/' +
+        res.redirect( 'http://localhost:3000'  + '/#authenticated/' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token
@@ -269,6 +273,22 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
+
+// 4/19/2 - TESTING FOR DEPLOYMENT PURPOSES BELOW
+app.get( '/test' , function(request, response) {
+    console.log("in test")
+    // goal: conditional on the Accept field in the request, send back a response
+    // as usual, only change the Content-Type field accordingly
+    if ( request.headers.accept.includes("css")   ) {
+      response.set("Content-Type" , "text/css")
+      response.send("CSS in request's Accept field")
+    }
+    else {
+      response.send("CSS not in request's Accept field")
+    }
+  } 
+)
+// END OF 4/19 TESTING
 
 console.log(`Listening on ${spotify_port}`);
 
