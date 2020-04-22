@@ -18,8 +18,6 @@ console.log(config)
 
 function App(props) {
 
-
- 
   return (
     <div>
    
@@ -46,16 +44,10 @@ function App(props) {
           </Route>
 
           <Route 
-            path="/testRoute"
-            // render={ routeProps =>  <span>testRoute</span> }
+            path="/testRoute" 
+            render = { routeProps => <DatabaseTest routeProps = {routeProps} glue="glue" />   }
           >
-            <Switch>
-              <Route path={`${useRouteMatch().path}/nested`}>
-                <div>Nested route</div>
-              </Route>
-            </Switch>
-            
-          </Route>          
+          </Route>        
 
           <Route path="/">
             <LandingPage spotify_login_url={'login'} authenticated={false} />

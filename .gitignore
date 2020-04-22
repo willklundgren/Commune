@@ -31,3 +31,7 @@ DeploymentProcess.txt
 /src/Components/testformattedDate.js
 backend/mongo_db_test.js
 sample_long_comments.txt
+backend/wkltest.txt
+/src dev
+prod/config_prod.js
+prod/build/
