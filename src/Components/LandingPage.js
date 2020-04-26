@@ -6,10 +6,10 @@ import { useLocation } from "react-router-dom";
 function LandingPage(props) {
   // console.log(this.props.location)
 
-  console.log("location:", useLocation())
+  // console.log("location:", useLocation())
   let app_location = useLocation();
   if ( app_location.hash != "" ) {
-    console.log("Authenticated...")
+    // console.log("Authenticated...")
   }
 
   return (

@@ -1,55 +1,158 @@
-.CommentInfo {
-    text-align: left;
-    padding: 5px;
-    font-size: 10px
+/* Anything that isn't an iphone - so laptops, "big" monitors, and so on. */
+
+@media not screen 
+    and (min-device-width: 375px) 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+        .CommentInfo {
+            text-align: left;
+            padding: 5px;
+            font-size: 10px
+        }
+        
+        .CommentTextInput {
+            width: 70%;
+            border-radius: 5px;
+            padding: 4px;
+            border: 1px solid black;
+            margin-right: 4px;
+            margin-bottom: 2px;
+        }
+        
+        .CommentSubmissionButton {
+            border-radius: 5px;
+            border: 1px solid black;
+            /* padding: 1px 15px; */
+            padding: 1px 6px;
+            font-size: 10px;
+        }
+        
+        .CommentWrapper button {
+            display: none;
+        }
+        
+        .CommentWrapper:hover button {
+            display: inline;
+        }
+        
+        .CommentDeletionButton {
+            background-color: #ff1a1a;
+            border-radius: 5px;
+            font-size: 10px;
+            border: 1px solid black
+        }
+        
+        .CommentViewsButton {
+            border-radius: 5px;
+            border: 1px solid black;
+            margin-top: 4px;
+            padding: 1px 6px;
+            font-size: 10px;
+            width: 120px;
+        }
+        
+        /* Maybe delete below */
+        .CommentBox {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .CommentWrapper {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .CommentText {
+            border-style: solid;
+            border-width: 1px;
+            font-size: 14px;
+            padding: 3px 9px;
+            /* font-weight: bold; */
+            background-color: lightskyblue;
+            border-radius: 10px;
+        }
+
 }
 
-.CommentTextInput {
-    width: 70%;
-    border-radius: 5px;
-    padding: 4px;
-    border: 1px solid black;
-    margin-right: 4px
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+    .CommentInfo {
+        text-align: left;
+        padding: 5px;
+        font-size: 6px
+    }
+    
+    .CommentTextInput {
+        width: 70%;
+        border-radius: 5px;
+        padding: 4px;
+        border: 1px solid black;
+        margin-bottom: 3px;
+        margin-right: 4px
+    }
+    
+    .CommentSubmissionButton {
+        border-radius: 5px;
+        background-color:lightgrey;
+        border: 1px solid black;
+        /* padding: 1px 15px; */
+        padding: 1px 6px;
+        font-size: 10px;
+    }
+    
+    .CommentWrapper button {
+        display: none;
+    }
+    
+    .CommentWrapper:hover button {
+        display: inline;
+    }
+    
+    .CommentDeletionButton {
+        background-color: #ff1a1a;
+        border-radius: 5px;
+        font-size: 10px;
+        border: 1px solid black
+    }
+    
+    .CommentViewsButton {
+        border-radius: 5px;
+        background-color:lightgrey;
+        border: 1px solid black;
+        margin-top: 4px;
+        padding: 1px 6px;
+        font-size: 10px;
+        width: 120px;
+    }
+    
+    /* Maybe delete below */
+    .CommentBox {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .CommentWrapper {
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+    
+    .CommentText {
+        /* background-color: blue; */
+        border-style: solid;
+        border-width: 1px;
+        font-size: 14px;
+        padding: 3px 9px;
+        /* font-weight: bold; */
+        background-color: lightskyblue;
+        border-radius: 10px;
+    }
+
 }
 
-.CommentSubmissionButton {
-    border-radius: 5px;
-    border: 1px solid black;
-    /* padding: 1px 15px; */
-    padding: 1px 6px;
-    font-size: 10px;
-}
-
-.CommentWrapper button {
-    display: none;
-}
-
-.CommentWrapper:hover button {
-    display: inline;
-}
-
-.CommentDeletionButton {
-    background-color: #ff1a1a;
-    border-radius: 5px;
-    font-size: 10px;
-    border: 1px solid black
-}
-
-.CommentViewsButton {
-    border-radius: 5px;
-    border: 1px solid black;
-    margin-top: 4px;
-    padding: 1px 6px;
-    font-size: 10px;
-    width: 120px;
-}
-
-/* Maybe delete below */
-.CommentBox {
-    display: flex;
-    flex-direction: column;
-}
-
-.CommentText {
-    /* background-color: blue; */
-}
