@@ -39,7 +39,7 @@ class PlaylistTable extends React.Component {
           playlist: spotify_response.data, 
           playlist_comments : db_response.data.playlist_comments // getting an *object* of comments
         })
-      console.log(spotify_response.data)  
+      // console.log(spotify_response.data)  
       })
     )
     
