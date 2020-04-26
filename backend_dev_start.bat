@@ -1,2 +1,0 @@
-cd backend
-nodemon server_spotify_test.js
