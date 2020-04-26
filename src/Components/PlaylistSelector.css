@@ -1,53 +1,134 @@
-.PlaylistSelector {
-    /* display: flex;
-    flex-direction: row; */
-    /* justify-content: center; */
-    /* padding: 5px; */
-    align-items: center;
-    /* font-family: 'Exo 2' */
-    /* background-color:goldenrod; */
+/* Anything that isn't an iphone - so laptops, "big" monitors, and so on. */
+
+@media not screen 
+    and (min-device-width: 375px) 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+        .PlaylistSelector {
+            /* display: flex;
+            flex-direction: row; */
+            /* justify-content: center; */
+            /* padding: 5px; */
+            align-items: center;
+            /* font-family: 'Exo 2' */
+            /* background-color:goldenrod; */
+        }
+        
+        .SelectionElements {
+            text-align: center;
+            margin: 0px
+            /* background-color:goldenrod */
+        }
+        
+        .SelectionElements span {
+            text-align: center;
+            font-size: large;
+            /* font-weight: bold; */
+            /* background-color:goldenrod */
+        }
+        .PlaylistSubmissionButton {
+            border-radius: 5px;
+            border: 1px solid black;
+            /* padding: 1px 15px; */
+            padding: 1px 6px;
+            font-size: 12px;
+        }
+        
+        .SelectionDropdown {
+            margin: 5px;
+            text-align: center;
+            font-size: medium;
+            border-radius: 3px;
+            border: 1px solid black;
+            /* padding: 1px 15px; */
+            padding: 1px 6px;
+        }
+        
+        .SelectionPageTitle {
+            font-size: 60px;
+            text-align: center;
+            font-weight: 600; 
+            font-family: 'Exo 2';
+            padding: 5px;
+        }
+        
+        .UserSignedIn {
+            font-size: small;
+            text-align: center;
+        }
+
+
 }
 
-.SelectionElements {
-    text-align: center;
-    margin: 0px
-    /* background-color:goldenrod */
-}
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
 
-.SelectionElements span {
-    text-align: center;
-    font-size: large;
-    /* font-weight: bold; */
-    /* background-color:goldenrod */
-}
-.PlaylistSubmissionButton {
-    border-radius: 5px;
-    border: 1px solid black;
-    /* padding: 1px 15px; */
-    padding: 1px 6px;
-    font-size: 12px;
-}
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
 
-.SelectionDropdown {
-    margin: 5px;
-    text-align: center;
-    font-size: medium;
-    border-radius: 3px;
-    border: 1px solid black;
-    /* padding: 1px 15px; */
-    padding: 1px 6px;
-}
+    .PlaylistSelector {
+        /* display: flex;
+        flex-direction: row; */
+        /* justify-content: center; */
+        /* padding: 5px; */
+        align-items: center;
+        /* font-family: 'Exo 2' */
+        /* background-color:goldenrod; */
+    }
+    
+    .SelectionElements {
+        text-align: center;
+        margin: 0px;
+        font-size: 25px;
+        /* background-color:goldenrod */
+    }
+    
+    /* for the "Select a playlist..." element */
+    .SelectionElements span {
+        text-align: center;
+        font-size: 40px;
+        /* font-size: large; */
+        /* font-weight: bold; */
+        /* background-color:goldenrod */
+    }
 
-.LandingPageTitle {
-    font-size: xxx-large;
-    text-align: center;
-    font-weight: 600; 
-    font-family: 'Exo 2';
-    padding: 5px;
-}
+    .PlaylistSubmissionButton {
+        font-size: 25px;
+        border-radius: 5px;
+        border: 1px solid black;
+        /* padding: 1px 15px; */
+        padding: 1px 6px;
+        /* font-size: 12px; */
+    }
+    
+    .SelectionDropdown {
+        /* font-size: 100%; */
+        /* font-size: 25px; */
+        font-size: inherit;
+        margin: 5px;
+        text-align: center;
+        /* font-size: medium; */
+        border-radius: 3px;
+        border: 1px solid black;
+        /* padding: 1px 15px; */
+        padding: 1px 6px;
+    }
+    
+    /* Contains "Betterplay" */
+    .SelectionPageTitle {
+        font-size: 80px;
+        text-align: center;
+        font-weight: 600; 
+        font-family: 'Exo 2';
+        padding: 5px;
+    }
+    
+    /* Not used */
+    .UserSignedIn {
+        font-size: small;
+        text-align: center;
+    }
 
-.UserSignedIn {
-    font-size: small;
-    text-align: center;
 }
-

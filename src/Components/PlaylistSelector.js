@@ -30,7 +30,7 @@ class PlaylistSelector extends React.Component {
   }
 
   getPlaylistData = ( token ) => {
-    console.log("in getPlaylistData")
+    //console.log("in getPlaylistData")
     var id = this.props.user_data.location.state.userSessionInfo.user_id;
     var limit = 50;
     var url_string = `https://api.spotify.com/v1/users/${id}/playlists?limit=${limit}`
@@ -79,7 +79,7 @@ class PlaylistSelector extends React.Component {
 
       <div className="PlaylistSelector">
 
-        <div className="LandingPageTitle">Betterplay</div>
+        <div className="SelectionPageTitle">Betterplay</div>
 
         {/* <div className="UserSignedIn">Signed in as {this.props.user_data.location.state.userSessionInfo.user_display_name }</div> */}
 

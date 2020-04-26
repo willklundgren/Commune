@@ -1,19 +1,61 @@
-.LoginButtonSignedOut {
-    padding: 3px;
-    font-size: large;
+/* Anything that isn't an iphone - so laptops, "big" monitors, and so on. */
+
+@media not screen 
+    and (min-device-width: 375px) 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+      .LoginButtonSignedOut {
+        padding: 3px;
+        font-size: large;
+      }
+    
+      .LoginButtonSignedIn {
+        font-size: x-small;
+      }
+      
+      .SpotifyLoginHREF {
+        border-radius: 5px;
+        border: 1px solid black;
+        /* padding: 1px 15px; */
+        padding: 3px 9px;
+        font-size: large;
+        text-decoration: none;
+        color: black;
+        background-color: #e1e1e1;
+      }
+
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+    .LoginButtonSignedOut {
+      padding: 3px;
+      font-size: large;
+    }
+  
+    .LoginButtonSignedIn {
+      font-size: 10px;
+    }
+    
+    .SpotifyLoginHREF {
+      border-radius: 5px;
+      border: 1px solid black;
+      /* padding: 1px 15px; */
+      padding: 5px 11px;
+      font-size: 30px;
+      text-decoration: none;
+      color: black;
+      background-color: #e1e1e1;
+    }
+
   }
 
-.LoginButtonSignedIn {
-  font-size: x-small;
-}
 
-.SpotifyLoginHREF {
-  border-radius: 5px;
-  border: 1px solid black;
-  /* padding: 1px 15px; */
-  padding: 3px 9px;
-  font-size: large;
-  text-decoration: none;
-  color: black;
-  background-color: #e1e1e1;
-}
+

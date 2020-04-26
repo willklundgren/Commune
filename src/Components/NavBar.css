@@ -1,29 +1,76 @@
-.NavBar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* padding: 5px; */
-    /* font-family: 'Exo 2'; */
-    font-weight: 400;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    /* background-color:goldenrod; */
+/* Anything that isn't an iphone - so laptops, "big" monitors, and so on. */
+
+@media not screen 
+    and (min-device-width: 375px) 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+        .NavBar {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* padding: 5px; */
+            /* font-family: 'Exo 2'; */
+            font-weight: 400;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            /* background-color:goldenrod; */
+        }
+        
+        .NavBarTitle {
+            font-size: xxx-large;
+            font-weight: 600; 
+            font-family: 'Exo 2'
+        }
+        
+        .NavBarPlaylistName {
+            display: flex;
+            text-align: center;
+            font-size: x-large;
+        }
+        
+        .NavBarPlaylistName span {
+            align-self: flex-end;
+        }
+
 }
 
-.NavBarTitle {
-    font-size: xxx-large;
-    font-weight: 600; 
-    font-family: 'Exo 2'
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+    .NavBar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        /* padding: 5px; */
+        /* font-family: 'Exo 2'; */
+        font-weight: 400;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        /* background-color:goldenrod; */
+    }
+    
+    .NavBarTitle {
+        font-size: 40px;
+        font-weight: 600; 
+        font-family: 'Exo 2'
+    }
+    
+    .NavBarPlaylistName {
+        display: flex;
+        text-align: center;
+        font-size: 20px;
+    }
+    
+    .NavBarPlaylistName span {
+        align-self: flex-end;
+    }
 }
 
-.NavBarPlaylistName {
-    display: flex;
-    text-align: center;
-    font-size: x-large;
-}
-
-.NavBarPlaylistName span {
-    align-self: flex-end;
-}

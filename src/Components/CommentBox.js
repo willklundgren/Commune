@@ -60,7 +60,7 @@ class CommentBox extends React.Component {
         show_less : false,
         newly_posted_comment_count: 0
     }
-    console.log("Array of song comments from the database:", this.props.song_comments)
+    // console.log("Array of song comments from the database:", this.props.song_comments)
   }
 
   toggleAllComments = () => (

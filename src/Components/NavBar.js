@@ -6,8 +6,8 @@ import { useLocation } from "react-router-dom";
 function NavBar(props) {
   // console.log(this.props.location)
   let location = useLocation();
-  console.log(location)
-  console.log("react router location:" )
+  // console.log(location)
+  // console.log("react router location:" )
   let pathname = location.pathname;
   return (
     <div className="NavBar">

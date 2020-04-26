@@ -14,7 +14,7 @@ import LandingPage from './Components/LandingPage';
 
 // import { frontend_dev_config as config } from "./frontend_config.js" // For DEVELOPMENT
 import { frontend_prod_config as config } from "./frontend_config.js" // For PRODUCTION
-console.log(config)
+// console.log(config)
 
 function App(props) {
 

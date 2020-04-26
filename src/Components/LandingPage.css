@@ -1,19 +1,62 @@
-.LandingPage {
-    /* background-color: green; */
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    text-align: center;
+/* Anything that isn't an iphone - so laptops, "big" monitors, and so on. */
+
+@media not screen 
+    and (min-device-width: 375px) 
+    and (max-device-width: 667px) 
+    and (-webkit-min-device-pixel-ratio: 2) {
+
+    .LandingPage {
+        /* background-color: green; */
+        display: flex;
+        flex-direction:column;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .LandingPageTitle {
+        font-size: 100px;
+        font-weight: 600; 
+        font-family: 'Exo 2';
+        padding: 5px;
+    }
+    
+    .LandingPageDescription {
+        font-size: large; 
+        font-size: x-large;
+        padding-bottom: 10px;
+    }
+
 }
 
-.LandingPageTitle {
-    font-size: xxx-large;
-    font-weight: 600; 
-    font-family: 'Exo 2';
-    padding: 5px;
-}
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
 
-.LandingPageDescription {
-    font-size: large;
-    padding-bottom: 10px;
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+    .LandingPage {
+        /* background-color: green; */
+        display: flex;
+        flex-direction:column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .LandingPageTitle {
+        font-size: 120px;
+        font-weight: 600; 
+        font-family: 'Exo 2';
+        padding: 5px;
+    }
+
+    .LandingPageDescription {
+        -webkit-text-size-adjust: none;
+        font-size: 30px;
+        /* background-color: lightcoral; */
+        /* font-size: x-large; */
+        padding-bottom: 17px;
+    }
+
 }

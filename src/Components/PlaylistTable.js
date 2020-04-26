@@ -18,7 +18,7 @@ class PlaylistTable extends React.Component {
       playlist_comments: "NULL",
       profile: false
     }
-    console.log(props)
+    // console.log(props)
   }
 
   componentDidMount() {
@@ -39,8 +39,10 @@ class PlaylistTable extends React.Component {
           playlist: spotify_response.data, 
           playlist_comments : db_response.data.playlist_comments // getting an *object* of comments
         })
+      console.log(spotify_response.data)  
       })
     )
+    
   }
 
   render() {
@@ -71,7 +73,9 @@ class PlaylistTable extends React.Component {
                   this.state.playlist_comments != "NULL" && 
                   this.state.playlist
                   .sort(
-                    (song1, song2) => !( song2.added_at - song1.added_at )
+                    (song1, song2) => 
+                      (song2.added_at > song1.added_at) ? 1 :
+                      (song2.added_at < song1.added_at) ? -1 : 0
                   )
                   .map(
                     song => <PlaylistRow

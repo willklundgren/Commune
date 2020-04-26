@@ -16,7 +16,7 @@ function LandingPage(props) {
     <div className="LandingPage">
           <div className="LandingPageTitle">Betterplay</div>
           <div className="LandingPageDescription">
-            Comment on your collaborative Spotify playlists. Get started in seconds.
+            Comment on your collaborative Spotify playlists.
           </div>
            <SpotifyLogin 
            user_display_name={props.user_display_name}
