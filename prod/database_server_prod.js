@@ -1,11 +1,12 @@
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+const config = require("./config_prod.js")
 
 var MongoClient = require("mongodb").MongoClient
 
 // Taken from CosmosDB instance on Azure...
-var url_prod = "mongodb://bp-db:WAowx88FJvtWo4YvTTW9LtLpcd2Vyf4ZzQJNP7sAMLIuwCW1UgjGe2P8w3D4bQfeMoPbwEzs7nOe2QqRiZWsHw%3D%3D@bp-db.documents.azure.com:10255/?ssl=true";
+var url_prod = config.prod_config.mongo_db_url
 var url_local = "mongodb://localhost:27017"
 var database_port = 4500;
 
