@@ -1,11 +1,12 @@
-Authorization-related starter code for Spotify server taken from ...
+# Betterplay
+(DESCRIPTION)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Betterplay playlist page](/images/bp_screenshot_2_cropped_and_blacked_out.jpg)
 
-(insert screenshot)
+## Tools
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-To reproduce:
+## Getting Started
 
-...
-
-
+## Acknowledgements
+- Authorization-related starter code for Spotify server taken from ...
