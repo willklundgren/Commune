@@ -99,22 +99,6 @@ app.get('/callback', function(req, res, next) {
         refresh_token = body.refresh_token;
 
         console.log("Access token from backend:", access_token);
-
-        // var options = {
-        //   url: 'https://api.spotify.com/v1/me',
-        // //   url: "https://api.spotify.com/v1/playlists/2Or6Yh2QJMHmh1ccAkqfc8/tracks?limit=5",
-        //   headers: { 'Authorization': 'Bearer ' + access_token },
-        //   json: true
-        // };
-
-        // // use the access token to access the Spotify Web API
-        // request.get(options, function(error, response, body) {
-        //     console.log("Access token from backend:", access_token);
-        //     // console.log(body);
-        // });
-
-       // res.send("access token ready")
-
         // we can also pass the token to the browser to make requests from there
         res.redirect( 'http://localhost:3000'  + '/#authenticated/' +
           querystring.stringify({
@@ -188,7 +172,6 @@ app.get('/get_all_playlist_tracks/:playlist_id/:access_token', async function( r
 
 // Get all collaborative playlists at once.
 // Input: user's Spotify ID, session access token
-
 app.get( '/get_all_playlists/:user_id/:access_token' , async function (req, res) {
     console.log("In get_all_playlists")
     var user_id = req.params.user_id,
@@ -263,7 +246,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-// 4/19/2 - TESTING FOR DEPLOYMENT PURPOSES BELOW
 app.get( '/test' , function(request, response) {
     console.log("in test")
     // goal: conditional on the Accept field in the request, send back a response
@@ -277,10 +259,6 @@ app.get( '/test' , function(request, response) {
     }
   } 
 )
-// END OF 4/19 TESTING
 
 console.log(`Listening on ${spotify_port}`);
-
-// console.log(process.env)
-
 app.listen(spotify_port);
