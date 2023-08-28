@@ -1,16 +1,14 @@
-// Spotify OAuth2 Server
-// Starter code taken from https://github.com/spotify/web-api-auth-examples
-
-var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
-var cors = require('cors');
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 const axios = require('axios').default;
+const setUpHttpServer = require('./server_setup.js')
 
 // Spotify application credentials
 var client_id = '0a1b0b9e8bd043b8b1c360413e26b0f3'; // My client ID
 var client_secret = '4f39d523b69f47b3bee1e1662b545163'; // My secret
+
+const app = setUpHttpServer()
 
 // Deployment
 var azure_public_ip = '52.246.250.124', // Static IP from Azure VM
@@ -19,8 +17,6 @@ var azure_public_ip = '52.246.250.124', // Static IP from Azure VM
     redirect_uri = 'http://' + azure_public_ip + ':' + spotify_port + '/callback'; 
     // Note: redirect_uri must be registered with Spotify
 
-// For testing purposes
-var playlist_id = "2Or6Yh2QJMHmh1ccAkqfc8";
 var dev = true; // Switch to "true" if in development
 
 if (dev != false) {
@@ -28,13 +24,6 @@ if (dev != false) {
 }
 
 var stateKey = 'spotify_auth_state';
-var app = express();
-
-app.use(cors())
-   .use(cookieParser());
-
-   
-
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
