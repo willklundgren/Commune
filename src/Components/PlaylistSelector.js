@@ -7,9 +7,9 @@ import PlaylistTable from './PlaylistTable';
 import axios from 'axios';
 import { useLocation, Redirect, Route, Switch } from "react-router-dom"
 import './PlaylistSelector.css';
+import { getConfig } from "../configure_environment.js"
 
-// import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
-import { frontend_prod_config as config } from "../frontend_config.js" // For PRODUCTION
+const config = getConfig();
 
 class PlaylistSelector extends React.Component {
   constructor(props) {

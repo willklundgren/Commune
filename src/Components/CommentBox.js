@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
 import "./CommentBox.css"
+import { getConfig } from "../configure_environment.js"
 
-// import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
-import { frontend_prod_config as config } from "../frontend_config.js" // For PRODUCTION
-
-const db_url = config.database_url
+const config = getConfig();
+const db_url = config["mongo_db_url"]
 const monthNamesShort = ["Jan", "Feb", "March", "April", "May", "June", "July", "August", "Sep", "Oct", "Nov", "Dec"]
 const comment_default_limit = 3
 

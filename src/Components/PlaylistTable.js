@@ -6,9 +6,9 @@ import './PlaylistTable.css';
 import { Link, Redirect, NavLink } from 'react-router-dom';
 import NavBar from './NavBar'
 import axios from 'axios';
+import { getConfig } from "../configure_environment.js"
 
-// import { frontend_dev_config as config } from "../frontend_config.js" // For DEVELOPMENT
-import { frontend_prod_config as config } from "../frontend_config.js" // For PRODUCTION
+const config = getConfig();
 
 class PlaylistTable extends React.Component {
   constructor(props) {
